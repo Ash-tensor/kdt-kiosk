@@ -16,6 +16,7 @@ public class Store {
 
     @Column
     private String storeName;
+
     @Column
     private String location;
 
