@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Getter @Setter
-@Table(name = "orderItem")
+@Table(name = "orderitem")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,14 +16,14 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "orderID", nullable = false)
-    private Orders order;
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "menuID",nullable = false)
     private Menu menu;
 
     @ManyToOne
-    @JoinColumn(name = "customOptionID",nullable = false)
+    @JoinColumn(name = "custom_optionID",nullable = false)
     private CustomOption customOption;
 
     @Column(nullable = false)
