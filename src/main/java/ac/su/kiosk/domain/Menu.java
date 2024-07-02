@@ -15,12 +15,20 @@ public class Menu {
     private int menuId;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId", nullable = false)
+    @JoinColumn(name = "categoryID", nullable = false)
     private Category category;
 
     @Column(nullable = false)
     private String menuName;
 
     @Column(nullable = false)
-    private BigDecimal basePrice;
+//    private BigDecimal basePrice;
+//    int로 수정했습니다.
+    private int basePrice;
+
+    @Column(nullable = false)
+    private String menuDescription;
+
+    @Column(nullable = false)
+    private String menuImage;
 }
