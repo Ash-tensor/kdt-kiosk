@@ -9,11 +9,11 @@ import lombok.Setter;
 @Table(name = "customer")
 public class Customer {
     @Id
-    @Column(name = "customerID")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerId;
+    private int customerID;
 
-    @Column(name = "customerName")
+    @Column
     private String customerName;
 
     @Column

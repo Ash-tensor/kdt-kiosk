@@ -20,6 +20,6 @@ public class Store {
     @Column
     private String location;
 
-    @OneToMany(mappedBy = "store")//일대다 관계
-    private List<Kiosk> kiosks;
+//    @OneToMany(mappedBy = "store")//일대다 관계
+//    private List<Kiosk> kiosks;
 }
