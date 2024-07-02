@@ -1,10 +1,14 @@
 package ac.su.kiosk.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter @Setter
+@Table(name="kiosk")
 public class Kiosk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,40 +18,10 @@ public class Kiosk {
     @JoinColumn(name = "storeID", nullable = false)//외래키 필드의 이름
     private Store store;
 
+    @Column
     private String kioskNumber;
 
     @OneToMany(mappedBy = "kiosk")
     private List<Admin> admins;
 
-    public int getKioskID() {
-        return kioskID;
-    }
-
-    public void setKioskID(int kioskID) {
-        this.kioskID = kioskID;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public String getKioskNumber() {
-        return kioskNumber;
-    }
-
-    public void setKioskNumber(String kioskNumber) {
-        this.kioskNumber = kioskNumber;
-    }
-
-    public List<Admin> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<Admin> admins) {
-        this.admins = admins;
-    }
 }
