@@ -7,12 +7,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "PaymentMethod")
+@Table(name = "paymentmethod")
 public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long PaymentMethodID;
+    private Long paymentMethodID;
 
     @Column
-    private String PaymentMethodName;
+    private String paymentMethodName;
 }
