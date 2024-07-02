@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface MenuRepository extends JpaRepository<Menu,Integer>, QuerydslPredicateExecutor<Menu>
-{
+import java.util.List;
 
+@Repository
+public interface MenuRepository extends JpaRepository<Menu,Integer>, QuerydslPredicateExecutor<Menu> {
+    List<Menu> findByCategory_CategoryNameAndMenuName(String categoryName, String menuName);
 }

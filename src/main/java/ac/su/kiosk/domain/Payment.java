@@ -15,7 +15,7 @@ public class Payment {
     private Long PaymentID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Order")
+    @JoinColumn(name = "orders")
     private Order OrderID;
 
     @ManyToOne(fetch = FetchType.LAZY)

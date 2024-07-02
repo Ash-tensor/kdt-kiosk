@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 @Entity
 @Getter @Setter
-
+@Table(name = "categoryoption")
 public class CustomOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
