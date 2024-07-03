@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryId;
+    private int categoryID;
 
     @Column(nullable = false)
     private String categoryName;
@@ -18,7 +18,7 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "categoryId=" + categoryId +
+                "categoryId=" + categoryID +
                 ", categoryName='" + categoryName + '\'' +
                 '}';
     }

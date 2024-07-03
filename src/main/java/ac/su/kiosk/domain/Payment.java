@@ -8,23 +8,23 @@ import java.util.Date;
 
 @Entity
 @Getter @Setter
-@Table(name = "Payment")
+@Table(name = "payment")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long PaymentID;
+    private Long paymentID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orders")
-    private Order OrderID;
+    @JoinColumn(name = "orderID")
+    private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PaymentMethod")
-    private PaymentMethod PaymentMethodID;
+    @JoinColumn(name = "paymentMethodID")
+    private PaymentMethod paymentMethod;
 
     @Column
-    private Long Amount;
+    private Long amount;
 
     @Column
-    private Date PaymentDateTime;
+    private Date paymentDateTime;
 }

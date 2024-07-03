@@ -8,20 +8,20 @@ import lombok.Setter;
 import java.math.BigDecimal;
 @Entity
 @Getter @Setter
-@Table(name = "categoryoption")
+@Table(name = "custom_option")
 public class CustomOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customOptionId;
+    private int customOptionID;
 
     @ManyToOne
-    @JoinColumn(name = "menuId", nullable = false)
-    private Category menu;
+    @JoinColumn(name = "menuID", nullable = false)
+    private Menu menu;
 
     @Column(nullable = false)
     private String optionName;
 
     @Column(nullable = false)
-    private BigDecimal additionalPrice;
+    private int additionalPrice;
 
 }

@@ -4,8 +4,6 @@ package ac.su.kiosk.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -15,27 +13,22 @@ import java.time.LocalDateTime;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long OrderID;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "CustomerID")  // 여기서 부터는 임의로 지은 테이블 명 및 클래스 명 이용 추후 수정 예정
-//    private Customer CustomerID;
+    private Long orderID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "KioskID")
-    private Kiosk KioskID;
+    @JoinColumn(name = "customerID")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kioskID")
+    private Kiosk kiosk;
 
     // 오류를 예방하기 위해 일단 관계없이 생성
     // 추후 위의 JoinColumn 사용
-    @Column
-    private Long CustomerID;
-//
-//    @Column
-//    private Long KioskID;
 
     @Column
-    private LocalDateTime OrderDateTime;
+    private LocalDateTime orderDateTime;
 
     @Column
-    private BigDecimal TotalPrice;
+    private int totalPrice;
 }
