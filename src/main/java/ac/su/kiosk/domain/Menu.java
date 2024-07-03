@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int menuId;
+    private int menuID;
 
     @ManyToOne
     @JoinColumn(name = "categoryID", nullable = false)
@@ -22,13 +22,11 @@ public class Menu {
     private String menuName;
 
     @Column(nullable = false)
-//    private BigDecimal basePrice;
-//    int로 수정했습니다.
     private int basePrice;
 
-    @Column(nullable = false)
+    @Column
     private String menuDescription;
 
-    @Column(nullable = false)
+    @Column
     private String menuImage;
 }
