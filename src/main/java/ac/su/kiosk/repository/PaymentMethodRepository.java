@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PaymentMethodRepository extends JpaRepository<Order, Long> {
-    List<PaymentMethod> findByPaymentMethodID(Long paymentMethodID);
+public interface PaymentMethodRepository extends JpaRepository<PaymentMethod, Long> {
 }
