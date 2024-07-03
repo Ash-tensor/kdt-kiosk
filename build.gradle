@@ -41,10 +41,10 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
-//    implementation 'com.querydsl:querydsl-apt:4.4.0:jpa'
 
     // Google Cloud Secret Manager 사용을 위한 의존성 추가 -t
-    implementation 'com.google.cloud:google-cloud-secretmanager:2.0.7'
+//    implementation 'com.google.cloud:google-cloud-secretmanager:2.0.7'
+    implementation 'com.google.cloud:spring-cloud-gcp-starter-storage:5.3.0'
 
     // Google Cloud Platform Storage 사용을 위한 의존성 추가
 

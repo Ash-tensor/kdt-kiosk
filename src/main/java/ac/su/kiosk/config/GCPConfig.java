@@ -1,42 +1,23 @@
 package ac.su.kiosk.config;
 
-import com.google.cloud.secretmanager.v1.AccessSecretVersionRequest;
-import com.google.cloud.secretmanager.v1.SecretManagerServiceClient;
-import com.google.cloud.secretmanager.v1.SecretVersionName;
-import org.springframework.beans.factory.annotation.Value;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.List;
 
 @Configuration
 public class GCPConfig {
-
-    @Value("${spring.cloud.gcp.project-id}")
-    private String projectId;
-
-    @Value("${gcp.secret.name}")
-    private String secretName;
-
     @Bean
-    public String getGcpCredentials() throws IOException {
-        try (SecretManagerServiceClient client = SecretManagerServiceClient.create()) {
-            SecretVersionName secretVersionName = SecretVersionName.of(projectId, secretName, "latest");
-            AccessSecretVersionRequest request = AccessSecretVersionRequest.newBuilder()
-                    .setName(secretVersionName.toString())
-                    .build();
-            String secretData = client.accessSecretVersion(request).getPayload().getData().toStringUtf8();
-
-            // Create a temporary file to store the credentials
-            Path tempPath = Files.createTempFile("gcp-credentials", ".json");
-            try (FileOutputStream fos = new FileOutputStream(tempPath.toFile())) {
-                fos.write(secretData.getBytes());
-            }
-
-            return tempPath.toString();
-        }
+    public Storage storage() throws IOException {
+        // 프로젝트 내부의 서비스 계정 키 파일 경로를 지정합니다.
+        GoogleCredentials credentials = GoogleCredentials.fromStream(new ClassPathResource("gcp-key.json").getInputStream())
+                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
+        // 인증 정보를 사용하여 Storage 객체를 생성합니다.
+        return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
     }
 }
