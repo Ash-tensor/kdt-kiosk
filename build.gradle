@@ -43,6 +43,12 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
 //    implementation 'com.querydsl:querydsl-apt:4.4.0:jpa'
 
+    // Google Cloud Secret Manager 사용을 위한 의존성 추가 -t
+    implementation 'com.google.cloud:google-cloud-secretmanager:2.0.7'
+
+    // Google Cloud Platform Storage 사용을 위한 의존성 추가
+
+
     // wild-mantle : 테스트를 위한 h2를 사용하기 위해 추가한 코드
     runtimeOnly 'com.h2database:h2'
 
