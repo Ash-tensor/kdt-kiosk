@@ -23,4 +23,10 @@ public class Menu {
 
     @Column(nullable = false)
     private int basePrice;
+
+    @Column
+    private String menuDescription;
+
+    @Column
+    private String menuImage;
 }
