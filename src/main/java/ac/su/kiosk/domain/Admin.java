@@ -12,6 +12,8 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int adminID;
 
+//    for commitment
+
     @ManyToOne
     @JoinColumn(name = "kioskID", nullable = false)
     private Kiosk kiosk;
