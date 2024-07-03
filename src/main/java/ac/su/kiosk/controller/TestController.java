@@ -1,8 +1,11 @@
 package ac.su.kiosk.controller;
 
+import ac.su.kiosk.domain.TestEntity;
+import ac.su.kiosk.repository.TestRepo;
 import ac.su.kiosk.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import java.io.IOException;
 @RequestMapping("/test")
 public class TestController {
     private final TestService testService;
+    private final TestRepo testRepo;
 
     @GetMapping("/upload")
     public String uploadTest() {
@@ -23,9 +27,15 @@ public class TestController {
     }
 
     @PostMapping("/upload")
-    public String imagePostTest(MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
+    public String imagePostTest(MultipartFile file, Model model) throws IOException {
         String message = testService.uploadFile(file);
-        redirectAttributes.addFlashAttribute("message", message);
-        return "redirect:/test/upload_test";
+        TestEntity test = new TestEntity();
+
+        test.setTestString(message);
+        testRepo.save(test);
+
+        model.addAttribute("message", message);
+
+        return "/test/upload_result";
     }
 }
