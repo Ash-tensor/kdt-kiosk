@@ -1,27 +1,51 @@
 package ac.su.kiosk.domain;
 
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.math.BigDecimal;
 @Entity
-@Getter @Setter
-@Table(name = "custom_option")
 public class CustomOption {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customOptionID;
+    private Long id;
+
+    private String name;
+    private Double additionalPrice;
 
     @ManyToOne
-    @JoinColumn(name = "menuID", nullable = false)
+    @JoinColumn(name = "menuId", nullable = false)
     private Menu menu;
 
-    @Column(nullable = false)
-    private String optionName;
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
 
-    @Column(nullable = false)
-    private int additionalPrice;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getAdditionalPrice() {
+        return additionalPrice;
+    }
+
+    public void setAdditionalPrice(Double additionalPrice) {
+        this.additionalPrice = additionalPrice;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 }

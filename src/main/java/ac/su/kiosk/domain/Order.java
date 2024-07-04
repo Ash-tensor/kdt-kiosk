@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderID;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerID")
@@ -27,7 +27,7 @@ public class Order {
     // 추후 위의 JoinColumn 사용
 
     @Column
-    private LocalDateTime orderDateTime;
+    private LocalDateTime dateTime;
 
     @Column
     private int totalPrice;

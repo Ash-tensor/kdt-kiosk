@@ -2,7 +2,6 @@ package ac.su.kiosk.wildmantle.test.repositoryTest;
 
 import ac.su.kiosk.domain.Category;
 import ac.su.kiosk.repository.CategoryRepository;
-import org.apache.catalina.filters.ExpiresFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test-wildmantle.properties")
 class CategoryRepositoryTest {
@@ -28,7 +26,7 @@ class CategoryRepositoryTest {
 
         for (String categoryName : categoryInputNames) {
             Category category = new Category();
-            category.setCategoryName(categoryName);
+            category.setName(categoryName);
             categoryList.add(category);
         }
 

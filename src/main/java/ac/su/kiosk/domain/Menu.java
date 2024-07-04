@@ -1,32 +1,51 @@
 package ac.su.kiosk.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Entity
-@Getter @Setter
-@Table(name = "menu")
 public class Menu {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int menuID;
+    private Long id;
+
+    private String name;
+    private Double basePrice;
 
     @ManyToOne
-    @JoinColumn(name = "categoryID", nullable = false)
+    @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
 
-    @Column(nullable = false)
-    private String menuName;
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
 
-    @Column(nullable = false)
-    private int basePrice;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    @Column
-    private String menuDescription;
+    public String getName() {
+        return name;
+    }
 
-    @Column
-    private String menuImage;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(Double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
