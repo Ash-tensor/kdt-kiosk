@@ -1,6 +1,7 @@
 package ac.su.kiosk.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,5 +22,18 @@ public class Admin {
 
     @Column
     private String password;
+
+    @Column
+    private String email;
+
+    @Column
+    private String address;
+
+    @Builder
+    public Admin(String name, String email, String address) {
+        this.name = name;
+        this.email = email;
+        this.address = address;
+    }
 
 }

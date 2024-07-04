@@ -2,6 +2,7 @@ package ac.su.kiosk.domain;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -30,5 +31,13 @@ public class Order {
     private LocalDateTime dateTime;
 
     @Column
-    private int totalPrice;
+    private long totalPrice;
+
+    @Column
+    private String storeName;
+
+    @Column
+    private String orderUid;
+
+    }
 }
