@@ -1,5 +1,7 @@
 package ac.su.kiosk.controller;
 
+import ac.su.kiosk.domain.Category;
+import ac.su.kiosk.domain.Menu;
 import ac.su.kiosk.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ public class MainController {
     public String testpage() {
         String temp = testService.test(1l);
         return temp;
+
     }
 
 }

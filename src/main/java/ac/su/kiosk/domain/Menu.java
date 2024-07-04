@@ -27,6 +27,6 @@ public class Menu {
     @Column
     private String menuDescription;
 
-    @Column
+    @Column(length = 2000)
     private String menuImage;
 }

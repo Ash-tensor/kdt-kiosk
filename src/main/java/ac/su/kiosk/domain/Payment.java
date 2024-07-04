@@ -16,7 +16,7 @@ public class Payment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderID")
-    private Order order;
+    private Order order; // 오더에 가있어야함
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentMethodID")
@@ -27,4 +27,5 @@ public class Payment {
 
     @Column
     private Date paymentDateTime;
+
 }

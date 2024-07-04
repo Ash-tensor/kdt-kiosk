@@ -1,17 +1,23 @@
 package ac.su.kiosk.controller;
 
+import ac.su.kiosk.service.MenuService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/menu")
+@RequestMapping("/menu")
+@Controller
 public class MenuAddController {
-    @PostMapping("/add")
+    private final MenuService menuService;
+
+    @GetMapping("/add")
     public String addMenu() {
-        return "addMenu";
+        menuService.addMenu();
+
+
     }
+
 
 }

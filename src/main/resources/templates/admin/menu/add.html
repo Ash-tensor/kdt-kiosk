@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+
+
+</head>
+<body>
+<h1>Upload an Image</h1>
+<form action="/admid/menu/add" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*">
+    <input type="text" name="name" placeholder="Name">
+    <input type="text" name="description" placeholder="description">
+    <input type="text" name="price" placeholder="price">
+    <input type="text" name="category" placeholder="category">
+    <button type="submit">Upload</button>
+</form>
+</body>
+</html>
