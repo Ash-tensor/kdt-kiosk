@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>커스텀 옵션 선택</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+        }
+        .option {
+            display: inline-block;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>커스텀 옵션 선택</h1>
+    <div th:each="option : ${options}" class="option">
+        <a th:href="'/order?optionId=' + ${option.id}" class="button" th:text="${option.name}">옵션</a>
+    </div>
+</div>
+</body>
+</html>

@@ -44,7 +44,7 @@ dependencies {
 //    implementation 'com.querydsl:querydsl-apt:4.4.0:jpa'
 
     // wild-mantle : 테스트를 위한 h2를 사용하기 위해 추가한 코드
-    runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'com.h2database:h2'
 
     implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
