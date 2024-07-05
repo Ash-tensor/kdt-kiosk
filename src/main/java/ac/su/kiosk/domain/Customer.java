@@ -24,5 +24,9 @@ public class Customer {
     @Column
     private String customerAddress;
 
-
+    // 추가해야 할 컬럼(결제모듈을 위해서)
+//    @Column
+//    private String email;
+//    @Column
+//    private String address;
 }

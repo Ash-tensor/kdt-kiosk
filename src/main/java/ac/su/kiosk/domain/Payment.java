@@ -12,7 +12,7 @@ import java.util.Date;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentID;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderID")
@@ -20,11 +20,11 @@ public class Payment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentMethodID")
-    private PaymentMethod paymentMethod;
+    private PaymentMethod method;
 
     @Column
     private Long amount;
 
     @Column
-    private Date paymentDateTime;
+    private Date dateTime;
 }

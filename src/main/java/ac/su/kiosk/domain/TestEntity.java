@@ -14,6 +14,6 @@ public class TestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
-    @Column
+    @Column(length = 2000)
     public String testString;
 }
