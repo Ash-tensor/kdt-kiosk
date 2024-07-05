@@ -8,35 +8,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
+@RequestMapping("/api/menus")
 public class MenuController {
 
     private final MenuService menuService;
 
     @GetMapping("/all")
-    public String getAllMenu(Model model) {
-        List<Menu> menuList = menuService.getAll();
-        model.addAttribute("menuList", menuList);
-        return "menuList"; // 반환할 뷰의 이름
+    public List<Menu> getAllMenu(Model model) {
+//        List<Menu> menuList = menuService.getAll();
+        return menuService.getAll();
     }
+    // 모든 메뉴를 검색해서 반환 ( JSON 데이터 형식 )
+
+
 
     @GetMapping("/{categoryName}")
-    public String getAllMenuByCategory(@PathVariable String categoryName, Model model) {
+    public List<Menu> getAllMenuByCategory(@PathVariable String categoryName) {
         Optional<Category> categoryOpt = menuService.getCategoryByName(categoryName);
-
         if (categoryOpt.isPresent()) {
             Category category = categoryOpt.get();
-            List<Menu> menuList = menuService.getAllByCategory(category);
-            model.addAttribute("menuList", menuList);
-            return "menuList"; // 반환할 뷰의 이름
+            return menuService.getAllByCategory(category);
         } else {
-            model.addAttribute("error", "Category not found");
-            return "error"; // 에러 뷰의 이름
+            throw new RuntimeException("Category not found");
         }
-    }
+    } // 검색된 카테고리가 존재할 시, 그 카테고리로 메뉴를 검색해서 반환 ( JSON 데이터 )
 }
