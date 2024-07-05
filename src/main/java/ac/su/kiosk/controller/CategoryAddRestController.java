@@ -4,13 +4,12 @@ import ac.su.kiosk.domain.Category;
 import ac.su.kiosk.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/admin/category")
 @RestController
-public class CategoryAddController {
+public class CategoryAddRestController {
     private final CategoryService categoryService;
 
     @GetMapping("/add")

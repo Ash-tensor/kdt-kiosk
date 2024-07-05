@@ -17,7 +17,11 @@ public class MenuService {
     private final StorageService storageService;
     private final CategoryRepository categoryRepository;
 
-    public void addMenu(String menuDescription, MultipartFile file,
+    public void deleteMenu(int id) {
+        menuRepository.deleteById(id);
+    }
+
+    public String addMenu(String menuDescription, MultipartFile file,
                         String menuName, int categoryID, int basePrice) throws IOException {
         Menu menu = new Menu();
 
@@ -33,5 +37,6 @@ public class MenuService {
         menu.setCategory(category);
 
         menuRepository.save(menu);
+        return menuImage;
     }
 }
