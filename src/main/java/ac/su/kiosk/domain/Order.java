@@ -30,5 +30,5 @@ public class Order {
     private LocalDateTime dateTime;
 
     @Column
-    private int totalPrice;
+    private Long totalPrice;
 }

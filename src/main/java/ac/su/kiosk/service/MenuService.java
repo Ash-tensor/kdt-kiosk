@@ -16,6 +16,10 @@ public class MenuService {
     private final MenuRepository menuRepository;
     private final CategoryRepository categoryRepository;
 
+    public Optional<Menu> getById(Long id) {
+        return menuRepository.findById(id);
+    }
+
     public List<Menu> getAll() {
         return menuRepository.findAll();
     }
