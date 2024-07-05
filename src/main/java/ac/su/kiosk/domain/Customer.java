@@ -19,5 +19,10 @@ public class Customer {
     private String customerPhone;
 
     @Column
+    private int points;
+
+    @Column
     private String customerAddress;
+
+
 }
