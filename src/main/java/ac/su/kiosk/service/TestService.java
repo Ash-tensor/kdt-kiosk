@@ -1,5 +1,8 @@
 package ac.su.kiosk.service;
 
+import ac.su.kiosk.constant.PaymentStatus;
+import ac.su.kiosk.domain.OrderModuleDTO;
+import ac.su.kiosk.domain.Payment;
 import ac.su.kiosk.domain.TestEntity;
 import ac.su.kiosk.repository.TestRepo;
 
@@ -12,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class TestService {
     private final Storage storage;
     @Value("${spring.cloud.gcp.storage.bucket-name}")
     private String bucketName;
+    private final PaymentService paymentService;
 
     public String test(Long id) {
         Optional<TestEntity> temp = testRepo.findById(id);
@@ -38,5 +43,17 @@ public class TestService {
         } catch (IOException e) {
             return "실패";
         }
+    }
+
+    public OrderModuleDTO makeOrderModuleDTO() {
+        OrderModuleDTO orderModuleDTO = new OrderModuleDTO();
+        orderModuleDTO.setStatus(PaymentStatus.READY);
+        orderModuleDTO.setEmail("test@example.com");
+        orderModuleDTO.setAddress("서울특별시 노원구 화랑로");
+        orderModuleDTO.setStoreName("5조");
+        orderModuleDTO.setOrderUid(UUID.randomUUID().toString());
+        orderModuleDTO.setPrice(100L);
+
+        return orderModuleDTO;
     }
 }
