@@ -1,24 +1,15 @@
 package ac.su.kiosk.controller;
 
-import ac.su.kiosk.domain.Category;
 import ac.su.kiosk.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 public class CategoryController {
+    private final CategoryService categoryService;
+    private final CategoryAddRestController categoryAddRestController;
 
-    @Autowired
-    private CategoryService categoryService;
 
-    @GetMapping("/categories")
-    public String categoryPage(Model model) {
-        List<Category> categories = categoryService.getAllCategories();
-        model.addAttribute("categories", categories);
-        return "category";
-    }
+
 }

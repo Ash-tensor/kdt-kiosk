@@ -10,14 +10,20 @@ import lombok.Setter;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int customerID;
 
     @Column
-    private String name;
+    private String customerName;
 
     @Column
-    private String phone;
+    private String customerPhone;
 
     @Column
-    private String address;
+    private String customerAddress;
+
+    // 추가해야 할 컬럼(결제모듈을 위해서)
+//    @Column
+//    private String email;
+//    @Column
+//    private String address;
 }

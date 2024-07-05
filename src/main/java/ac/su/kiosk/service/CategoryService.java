@@ -2,22 +2,19 @@ package ac.su.kiosk.service;
 
 import ac.su.kiosk.domain.Category;
 import ac.su.kiosk.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class CategoryService {
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public void addCategory(Category category) {
+        categoryRepository.save(category);
     }
 
-    public Category getCategory(Long categoryId) {
-        return categoryRepository.findById(categoryId).orElse(null);
+    public void deleteCategory(int id) {
+        categoryRepository.deleteById(id);
     }
 }

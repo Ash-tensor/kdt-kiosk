@@ -17,10 +17,10 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @GetMapping("/menu")
-    public String menuPage(@RequestParam("categoryId") Long id, Model model) {
-        Optional<Menu> menus = menuService.getMenusByCategory(id);
-        model.addAttribute("menus", menus);
-        return "menu";
-    }
+//    @GetMapping("/menu")
+//    public String menuPage(@RequestParam("categoryId") Long id, Model model) {
+//        Optional<Menu> menus = menuService.getMenusByCategory(id);
+//        model.addAttribute("menus", menus);
+//        return "menu";
+//    }
 }
