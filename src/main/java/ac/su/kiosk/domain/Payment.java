@@ -1,5 +1,6 @@
 package ac.su.kiosk.domain;
 
+import ac.su.kiosk.constant.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +28,7 @@ public class Payment {
 
     @Column
     private Date dateTime;
+
+    @Column
+    private PaymentStatus paymentStatus;
 }

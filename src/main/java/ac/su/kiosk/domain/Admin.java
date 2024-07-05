@@ -22,4 +22,7 @@ public class Admin {
     @Column
     private String password;
 
+    @Column
+    private String email; // 결제모듈 추가로 인해 추가됨
+
 }
