@@ -22,14 +22,14 @@ public class MenuService {
     }
 
     public String addMenu(String menuDescription, MultipartFile file,
-                        String menuName, int categoryID, int basePrice) throws IOException {
+                        String menuName, int categoryID, long basePrice) throws IOException {
         Menu menu = new Menu();
 
         String menuImage = storageService.uploadFile(file);
 
-        menu.setMenuDescription(menuDescription);
-        menu.setMenuImage(menuImage);
-        menu.setMenuName(menuName);
+        menu.setDescription(menuDescription);
+        menu.setImage(menuImage);
+        menu.setName(menuName);
         menu.setBasePrice(basePrice);
 
         Category category = categoryRepository.findById(categoryID)

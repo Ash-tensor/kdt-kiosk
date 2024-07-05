@@ -17,7 +17,7 @@
     <select id="category" name="category" required>
         <option value="" disabled selected>Select a category</option>
         <th:block th:each="category : ${categories}">
-            <option th:value="${category.categoryID}" th:text="${category.categoryName}"></option>
+            <option th:value="${category.id}" th:text="${category.name}"></option>
         </th:block>
     </select><br><br>
 

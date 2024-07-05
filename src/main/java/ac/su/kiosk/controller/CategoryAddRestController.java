@@ -18,9 +18,9 @@ public class CategoryAddRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCategory(@RequestParam String categoryName) {
+    public ResponseEntity<String> addCategory(@RequestParam String name) {
         Category category = new Category();
-        category.setCategoryName(categoryName);
+        category.setName(name);
         categoryService.addCategory(category);
         return ResponseEntity.ok("Category added successfully!");
     }
