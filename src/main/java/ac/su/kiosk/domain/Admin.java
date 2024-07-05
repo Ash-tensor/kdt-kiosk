@@ -10,14 +10,14 @@ import lombok.Setter;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int adminID;
+    private  int id;
 
     @ManyToOne
     @JoinColumn(name = "kioskID", nullable = false)
     private Kiosk kiosk;
 
     @Column
-    private String adminName;
+    private String name;
 
     @Column
     private String password;
