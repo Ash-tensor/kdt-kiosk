@@ -21,7 +21,7 @@ public class PointController {
     @PostMapping("/add")
     public ResponseEntity<String> addPoints(@RequestParam String customerPhone, @RequestParam int totalPrice){//요청 파라미터로 전달받은
         Order order = new Order();
-        order.setOrderDateTime(LocalDateTime.now());
+        order.setDateTime(LocalDateTime.now());
         order.setTotalPrice(totalPrice);
 
         boolean isSuccess = pointService.addPoints(customerPhone, order);
@@ -31,7 +31,7 @@ public class PointController {
     @PostMapping("/use")
     public ResponseEntity<String> usePoints(@RequestParam String customerPhone, @RequestParam int pointsToUse, @RequestParam int totalPrice){
         Order order = new Order();
-        order.setOrderDateTime(LocalDateTime.now());
+        order.setDateTime(LocalDateTime.now());
         order.setTotalPrice(totalPrice);
 
         boolean success = pointService.usePoints(customerPhone, pointsToUse, order);

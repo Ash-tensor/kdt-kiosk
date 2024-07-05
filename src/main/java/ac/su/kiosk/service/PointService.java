@@ -36,11 +36,11 @@ public class PointService {
     }
 
     //포인트 사용
-    public  Boolean usePoints(String customerPhone, int pointsTouse, Order order){
+    public  Boolean usePoints(String customerPhone, int pointsToUse, Order order){
         Customer customer = getOrCreateCustomer(customerPhone);
-        if(customer.getPoints() >= pointsTouse){
-            customer.setPoints(customer.getPoints() - pointsTouse);
-            int remainingAmount = order.getTotalPrice() - pointsTouse;
+        if(customer.getPoints() >= pointsToUse){
+            customer.setPoints(customer.getPoints() - pointsToUse);
+            int remainingAmount = order.getTotalPrice() - pointsToUse;
             customerRepository.save(customer);
             return remainingAmount >= 0;
         } else{
