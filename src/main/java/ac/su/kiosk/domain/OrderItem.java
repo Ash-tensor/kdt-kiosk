@@ -23,12 +23,12 @@ public class OrderItem {
     private Menu menu;
 
     @ManyToOne
-    @JoinColumn(name = "customOptionID",nullable = false)
+    @JoinColumn(name = "customOptionID")
     private CustomOption customOption;
 
     @Column(nullable = false)
     int quantity;
 
     @Column(nullable = false)
-    BigDecimal price;
+    Long price;
 }

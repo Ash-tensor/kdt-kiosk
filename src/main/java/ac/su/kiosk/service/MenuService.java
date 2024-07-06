@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -38,5 +40,21 @@ public class MenuService {
 
         menuRepository.save(menu);
         return menuImage;
+    }
+
+    public Optional<Menu> getById(Long id) {
+        return menuRepository.findById(id);
+    }
+
+    public List<Menu> getAll() {
+        return menuRepository.findAll();
+    }
+
+    public List<Menu> getAllByCategory(Category category) {
+        return menuRepository.findAllByCategory(category);
+    }
+
+    public Optional<Category> getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
     }
 }

@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CustomOptionRepository extends JpaRepository<CustomOption,Long>, QuerydslPredicateExecutor<CustomOption> {
-    List<CustomOption> findByid(Long id);
+List<CustomOption> findCustomOptionsByMenuId(Long menuID);
 }

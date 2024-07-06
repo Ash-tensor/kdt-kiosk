@@ -22,6 +22,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kioskID")
     private Kiosk kiosk;
+
     // 오류를 예방하기 위해 일단 관계없이 생성
     // 추후 위의 JoinColumn 사용
 
