@@ -42,7 +42,7 @@ public class MenuService {
         return menuImage;
     }
 
-    public Optional<Menu> getById(Long id) {
+    public Optional<Menu> getById(Integer id) {
         return menuRepository.findById(id);
     }
 
