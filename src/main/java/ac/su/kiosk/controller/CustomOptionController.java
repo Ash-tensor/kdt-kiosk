@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/select-custom-option/")
+@RequestMapping("/api/menus/")
 public class CustomOptionController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class CustomOptionController {
     @Autowired
     private MenuService menuService;
 
-    @GetMapping("/{menuId}")
+    @GetMapping("select-custom-option/{menuId}")
     public List<CustomOption> getCustomOptionsByMenuId(@PathVariable Long menuId ){
         return customOptionService.getCustomOptionsByMenu(menuId);
     }

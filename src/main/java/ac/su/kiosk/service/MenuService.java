@@ -24,7 +24,7 @@ public class MenuService {
     }
 
     public String addMenu(String menuDescription, MultipartFile file,
-                        String menuName, int categoryID, long basePrice) throws IOException {
+                        String menuName, int categoryID, long price) throws IOException {
         Menu menu = new Menu();
 
         String menuImage = storageService.uploadFile(file);
@@ -32,7 +32,7 @@ public class MenuService {
         menu.setDescription(menuDescription);
         menu.setImage(menuImage);
         menu.setName(menuName);
-        menu.setBasePrice(basePrice);
+        menu.setPrice(price);
 
         Category category = categoryRepository.findById(categoryID)
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryID));
@@ -40,10 +40,6 @@ public class MenuService {
 
         menuRepository.save(menu);
         return menuImage;
-    }
-
-    public Optional<Menu> getById(Integer id) {
-        return menuRepository.findById(id);
     }
 
     public List<Menu> getAll() {
@@ -56,5 +52,9 @@ public class MenuService {
 
     public Optional<Category> getCategoryByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    public List<Menu> getMenusByCategory(Long categoryId) {
+        return menuRepository.findByCategoryId(categoryId);
     }
 }

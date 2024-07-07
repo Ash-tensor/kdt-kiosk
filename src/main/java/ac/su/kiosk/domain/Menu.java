@@ -16,7 +16,7 @@ public class Menu {
     private String name;
 
     @Column
-    private Long basePrice;
+    private Long price;
 
     @Column
     private String description;
