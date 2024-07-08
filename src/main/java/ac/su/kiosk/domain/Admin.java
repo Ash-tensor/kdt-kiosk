@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int adminID;
+    private  int id;
 
 //    for commitment
 
@@ -19,7 +19,7 @@ public class Admin {
     private Kiosk kiosk;
 
     @Column
-    private String adminName;
+    private String name;
 
     @Column
     private String password;

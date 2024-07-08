@@ -5,9 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findByCustomer_CustomerID(Long customerID);
-    List<Order> findByKiosk_KioskID(Long kioskID);
-    List<Order> findByOrderDateTime(LocalDateTime startDateTime);
+    Optional<Order> findById(Long id);
+    List<Order> findByDateTime(LocalDateTime startDateTime);
+
+    List<Order> findAllByDateTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
+
 }

@@ -41,7 +41,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
-//    implementation 'com.querydsl:querydsl-apt:4.4.0:jpa'
+
+    // Google Cloud Secret Manager 사용을 위한 의존성 추가 -t
+//    implementation 'com.google.cloud:google-cloud-secretmanager:2.0.7'
+    implementation 'com.google.cloud:spring-cloud-gcp-starter-storage:5.3.0'
+
+    // Google Cloud Platform Storage 사용을 위한 의존성 추가
+
 
     // wild-mantle : 테스트를 위한 h2를 사용하기 위해 추가한 코드
     runtimeOnly 'com.h2database:h2'
@@ -50,14 +56,6 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-    // SPAMMAYO : DB 연결 테스트를 위해 추가한 의존성 설정
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    // SPAMMAYO : 로그인 서비스를 위한 의존성 설정
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    // SPAMMAYO : thymeleaf layout 적용을 위한 의존성 설정
-    // https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
-    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
 }
 tasks.named('test') {
     useJUnitPlatform()
