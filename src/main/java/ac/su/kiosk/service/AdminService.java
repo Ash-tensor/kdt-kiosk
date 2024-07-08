@@ -1,24 +1,26 @@
 package ac.su.kiosk.service;
 
-import ac.su.kiosk.domain.Category;
-import ac.su.kiosk.domain.Menu;
-import ac.su.kiosk.repository.CategoryRepository;
-import ac.su.kiosk.repository.MenuRepository;
-import com.google.cloud.storage.Storage;
+import ac.su.kiosk.domain.Admin;
+import ac.su.kiosk.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class AdminService {
-    private final MenuRepository menuRepository;
-    private final StorageService storageService;
-    private final CategoryRepository categoryRepository;
+    private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    public Admin create(String adminName, String email, String password) {
+        Admin admin = new Admin();
+        admin.setName(adminName);
+        admin.setEmail(email);
 
-
-
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        admin.setPassword(passwordEncoder.encode(password));
+        this.adminRepository.save(admin);
+        return admin;
+    }
 }

@@ -18,6 +18,10 @@ public class Store {
     @Column
     private String location;
 
+    @ManyToOne
+    @JoinColumn(name = "adminID", nullable = false)
+    private Admin admin;
+
 //    @OneToMany(mappedBy = "store")//일대다 관계
 //    private List<Kiosk> kiosks;
 }

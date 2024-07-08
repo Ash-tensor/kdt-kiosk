@@ -45,7 +45,6 @@ public class SalesController {
     //상세 매출 확인
     @GetMapping("/details")
     public List<Payment> getOrderDetails(@RequestParam Long orderId) {
-        return paymentRepository.findAllByOrderID(orderId);
+        return paymentRepository.findAllByOrderId(orderId);
     }
-
 }
