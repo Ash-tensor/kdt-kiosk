@@ -1,6 +1,7 @@
 package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Order;
+import ac.su.kiosk.domain.Payment;
 import ac.su.kiosk.repository.OrderRepository;
 import ac.su.kiosk.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,9 @@ public class SalesController {
     }
 
     //상세 매출 확인
+    @GetMapping("/details")
+    public List<Payment> getOrderDetails(@RequestParam Long orderId) {
+        return paymentRepository.findAllByOrderID(orderId);
+    }
 
 }
