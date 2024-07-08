@@ -26,8 +26,8 @@ public class PointService {
     //포인트 적립
     public boolean addPoints(String customerPhone, Order order){//*purechaseAmount:총 금액
         Customer customer = getOrCreateCustomer(customerPhone);
-        int points = calculatePoints(order.getTotalPrice());  // 1% 계산
-        customer.setPoints(customer.getPoints()+points);  // point 필드에 할당
+        long points = calculatePoints(order.getTotalPrice());  // 1% 계산
+        customer.setPoints((int) (customer.getPoints()+points));  // point 필드에 할당
         customerRepository.save(customer);//저장
         customerRepository.flush();
         customer = customerRepository.findById(customer.getCustomerID()).get();
@@ -40,7 +40,7 @@ public class PointService {
         Customer customer = getOrCreateCustomer(customerPhone);
         if(customer.getPoints() >= pointsToUse){
             customer.setPoints(customer.getPoints() - pointsToUse);
-            int remainingAmount = order.getTotalPrice() - pointsToUse;
+            int remainingAmount = (int) (order.getTotalPrice() - pointsToUse);
             customerRepository.save(customer);
             return remainingAmount >= 0;
         } else{
@@ -48,7 +48,7 @@ public class PointService {
         }
     }
 
-    private int calculatePoints(int totalPrice) {
-        return (int) (totalPrice * 0.01); // 1% 적립
+    private long calculatePoints(long totalPrice) {
+        return (long) (totalPrice * 0.01); // 1% 적립
     }
 }

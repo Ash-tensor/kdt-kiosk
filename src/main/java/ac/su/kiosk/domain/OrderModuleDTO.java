@@ -13,7 +13,6 @@ public class OrderModuleDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column
     private Long price;
     @Column

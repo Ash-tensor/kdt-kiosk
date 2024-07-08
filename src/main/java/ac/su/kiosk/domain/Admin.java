@@ -12,13 +12,13 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
 
-    // @Column
-    // @JoinColumn(name = "storeID", nullable = false)
-    // private Store store;가 연결되어 있어야함
+//     @ManyToOne
+//     @JoinColumn(name = "storeID", nullable = false)
+//     private Store store;//가 연결되어 있어야함
 
-    @ManyToOne
-    @JoinColumn(name = "kioskID", nullable = false) // SPAMMAYO : nullable = false 활성화시 회원가입때 충돌남 수정필요
-    private Kiosk kiosk;
+//    @ManyToOne
+//    @JoinColumn(name = "kioskID", nullable = false) // SPAMMAYO : nullable = false 활성화시 회원가입때 충돌남 수정필요
+//    private Kiosk kiosk;
 
     @Column
     private String name;

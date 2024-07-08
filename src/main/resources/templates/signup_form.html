@@ -21,6 +21,12 @@
             <div th:if="${#fields.hasErrors('adminName')}" th:errors="*{adminName}" class="invalid-feedback d-block"></div>
         </div>
         <div class="mb-3">
+            <label for="adminEmail" class="form-label">이메일</label>
+            <input id="adminEmail" type="email" th:field="*{adminEmail}" class="form-control">
+            <div th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" class="invalid-feedback d-block"></div>
+        </div>
+
+        <div class="mb-3">
             <label for="password1" class="form-label">비밀번호</label>
             <input id="password1" type="password" th:field="*{password1}" class="form-control">
             <div th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}" class="invalid-feedback d-block"></div>
@@ -38,6 +44,7 @@
         <div th:replace="~{form_errors :: formGlobalErrorsFragment}"></div>
         <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
+
 </div>
 </html>
 

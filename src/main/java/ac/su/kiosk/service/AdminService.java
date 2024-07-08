@@ -13,9 +13,11 @@ public class AdminService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Admin create(String adminName, String password) {
+    public Admin create(String adminName, String email, String password) {
         Admin admin = new Admin();
-        admin.setAdminName(adminName);
+        admin.setName(adminName);
+        admin.setEmail(email);
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         admin.setPassword(passwordEncoder.encode(password));
         this.adminRepository.save(admin);

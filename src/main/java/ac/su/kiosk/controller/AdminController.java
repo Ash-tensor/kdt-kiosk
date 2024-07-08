@@ -35,7 +35,9 @@ public class AdminController {
         try {
             adminService.create(
                     adminCreateForm.getAdminName(),
+                    adminCreateForm.getAdminEmail(),
                     adminCreateForm.getPassword1()
+
             );
         } catch (IllegalStateException e) {
             bindingResult.reject(

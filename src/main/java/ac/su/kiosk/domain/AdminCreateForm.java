@@ -11,6 +11,9 @@ public class AdminCreateForm {
     @NotEmpty(message = "관리자 ID는 필수항목입니다.")
     private String adminName;
 
+    @NotEmpty(message = "이메일은 필수항목입니다.")
+    private String adminEmail;
+
     @NotEmpty(message = "비밀번호는 필수항목입니다.")
     private String password1;
 
