@@ -12,7 +12,9 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
 
-//    for commitment
+    // @Column
+    // @JoinColumn(name = "storeID", nullable = false)
+    // private Store store;가 연결되어 있어야함
 
     @ManyToOne
     @JoinColumn(name = "kioskID", nullable = false) // SPAMMAYO : nullable = false 활성화시 회원가입때 충돌남 수정필요
@@ -23,5 +25,8 @@ public class Admin {
 
     @Column
     private String password;
+
+    @Column
+    private String email; // 결제모듈 추가로 인해 추가됨
 
 }
