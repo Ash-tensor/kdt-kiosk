@@ -15,7 +15,7 @@ public class Admin {
 //    for commitment
 
     @ManyToOne
-    @JoinColumn(name = "kioskID", nullable = false)
+    @JoinColumn(name = "kioskID", nullable = false) // SPAMMAYO : nullable = false 활성화시 회원가입때 충돌남 수정필요
     private Kiosk kiosk;
 
     @Column

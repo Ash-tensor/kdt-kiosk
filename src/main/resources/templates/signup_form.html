@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<div layout:fragment="contents" class="container my-3">
+    <div class="my-3 border-bottom">
+        <div>
+            <h4>회원가입</h4>
+        </div>
+    </div>
+    <form th:action="@{/admin/signup}" th:object="${adminCreateForm}" method="post">
+        <div class="mb-3">
+            <label for="adminName" class="form-label">사용자ID</label>
+            <input id="adminName" type="text" th:field="*{adminName}" class="form-control">
+            <!-- th:field 구문은 name 속성과 value 속성을 모두 자동으로 관리해 줌 -->
+            <div th:if="${#fields.hasErrors('adminName')}" th:errors="*{adminName}" class="invalid-feedback d-block"></div>
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">비밀번호</label>
+            <input id="password1" type="password" th:field="*{password1}" class="form-control">
+            <div th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}" class="invalid-feedback d-block"></div>
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">비밀번호 확인</label>
+            <input id="password2" type="password" th:field="*{password2}" class="form-control">
+            <div th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}" class="invalid-feedback d-block"></div>
+        </div>
+<!--        <div class="mb-3">-->
+<!--            <label for="email" class="form-label">이메일</label>-->
+<!--            <input id="email" type="email" th:field="*{email}" class="form-control">-->
+<!--            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback d-block"></div>-->
+<!--        </div>-->
+        <div th:replace="~{form_errors :: formGlobalErrorsFragment}"></div>
+        <button type="submit" class="btn btn-primary">회원가입</button>
+    </form>
+</div>
+</html>
+
+<!--<위에거 layout 미적용으로 Whitelabel 문제 뜨므로 수정 예정>-->
