@@ -12,6 +12,10 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
 
+    // @Column
+    // @JoinColumn(name = "storeID", nullable = false)
+    // private Store store;가 연결되어 있어야함
+
     @ManyToOne
     @JoinColumn(name = "kioskID", nullable = false)
     private Kiosk kiosk;
