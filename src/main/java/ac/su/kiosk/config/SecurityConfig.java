@@ -25,16 +25,9 @@ public class SecurityConfig {
                         (authorizeHttpRequests) ->
                                 authorizeHttpRequests
                                         .requestMatchers(
-                                                // Apache Ant 스타일 패턴을 사용해 URL 매칭 정의
-                                                new AntPathRequestMatcher(
-                                                        "/**"              // 모든 페이지 접속 허용
-                                                )
-                                                // ).denyAll()
-                                        ).permitAll()
-                                        .requestMatchers(
-                                                new AntPathRequestMatcher(
-                                                        "/admin/login"   // 로그인 URL 비회원 접속 허용
-                                                )
+                                                new AntPathRequestMatcher("/admin/login"),   // 로그인 URL 비회원 접속 허용),
+                                                new AntPathRequestMatcher("/"),
+                                                new AntPathRequestMatcher("/admin/signup")
                                         ).permitAll()
                                         .anyRequest().authenticated()  // 나머지 모든 URL 에 회원 로그인 요구
                 )
