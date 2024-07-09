@@ -1,6 +1,7 @@
 package ac.su.kiosk.config;
 
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,12 +27,14 @@ public class SecurityConfig {
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/login"),
                                 new AntPathRequestMatcher("/"),
-                                new AntPathRequestMatcher("/admin/signup")
+                                new AntPathRequestMatcher("/admin/signup"),
+                                new AntPathRequestMatcher("/api/**")
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.ignoringRequestMatchers(
-                        new AntPathRequestMatcher("/**")
+                        new AntPathRequestMatcher("/api/**"),
+                        new AntPathRequestMatcher("/admin/category/**")
                 ))
                 .headers(headers -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(
@@ -41,9 +44,8 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/admin/login")
                         .loginProcessingUrl("/admin/login")
-                        // 리액트 전환 필요
                         .defaultSuccessUrl("/")
-                        .usernameParameter("adminName")  // 필드 이름 설정
+                        .usernameParameter("adminName")
                         .passwordParameter("password")
                         .permitAll()
                 )
@@ -56,6 +58,7 @@ public class SecurityConfig {
                 );
         return http.build();
     }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
