@@ -86,6 +86,10 @@ dependencies {
     // jsp -> servlet 변환
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
 
 }
 tasks.named('test') {
