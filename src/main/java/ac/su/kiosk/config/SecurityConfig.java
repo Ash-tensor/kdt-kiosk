@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.ignoringRequestMatchers(
-                        new AntPathRequestMatcher("/api/**"),
+                        new AntPathRequestMatcher("/admin/**"),
                         new AntPathRequestMatcher("/admin/category/**")
                 ))
                 .headers(headers -> headers.addHeaderWriter(
