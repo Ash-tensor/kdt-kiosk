@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomOptionService {
     @Autowired
-    private CustomOptionRepository customOptionRepository;
+    private  CustomOptionRepository customOptionRepository;
 
-    public List<CustomOption> getCustomOptionsByMenu(Long id) {
+    public List<CustomOption> getCustomOptionsByMenu(int id) {
         return customOptionRepository.findCustomOptionsByMenuId(id);
     }
 }

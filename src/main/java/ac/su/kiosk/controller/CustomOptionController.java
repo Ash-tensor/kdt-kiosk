@@ -24,7 +24,7 @@ public class CustomOptionController {
     private MenuService menuService;
 
     @GetMapping("select-custom-option/{menuId}")
-    public List<CustomOption> getCustomOptionsByMenuId(@PathVariable Long menuId ){
+    public List<CustomOption> getCustomOptionsByMenuId(@PathVariable int menuId){
         return customOptionService.getCustomOptionsByMenu(menuId);
     }
 }
