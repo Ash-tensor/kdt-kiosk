@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class CustomOptionService {
-    @Autowired
-    private  CustomOptionRepository customOptionRepository;
+    private final CustomOptionRepository customOptionRepository;
+
+    public CustomOptionService(CustomOptionRepository customOptionRepository) {
+        this.customOptionRepository = customOptionRepository;
+    }
 
     public List<CustomOption> getCustomOptionsByMenu(int id) {
         return customOptionRepository.findCustomOptionsByMenuId(id);
