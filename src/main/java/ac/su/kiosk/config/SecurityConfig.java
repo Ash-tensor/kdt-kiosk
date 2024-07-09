@@ -1,10 +1,8 @@
 package ac.su.kiosk.config;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,53 +12,47 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableWebSecurity  // URL 요청에 대한 Spring Security 동작 활성화
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(  // 요청 인가 여부 결정을 위한 조건 판단
-                        (authorizeHttpRequests) ->
-                                authorizeHttpRequests
-                                        .requestMatchers(
-                                                new AntPathRequestMatcher("/admin/login"),   // 로그인 URL 비회원 접속 허용),
-                                                new AntPathRequestMatcher("/"),
-                                                new AntPathRequestMatcher("/admin/signup")
-                                        ).permitAll()
-                                        .anyRequest().authenticated()  // 나머지 모든 URL 에 회원 로그인 요구
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/admin/login"),
+                                new AntPathRequestMatcher("/"),
+                                new AntPathRequestMatcher("/admin/signup")
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
-                .csrf(
-                        (csrf) ->
-                                csrf.ignoringRequestMatchers(
-                                        // 필요 시 특정 페이지 CSRF 토큰 무시 설정
-                                        new AntPathRequestMatcher("/h2-console/**")
-                                        // , new AntPathRequestMatcher("/login")
-                                        // , new AntPathRequestMatcher("/logout")
-                                        // , new AntPathRequestMatcher("/signup")
-                                )
+                .csrf(csrf -> csrf.ignoringRequestMatchers(
+                        new AntPathRequestMatcher("/h2-console/**")
+                ))
+                .headers(headers -> headers.addHeaderWriter(
+                        new XFrameOptionsHeaderWriter(
+                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
+                        )
+                ))
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/admin/login")
+                        .loginProcessingUrl("/admin/login")
+                        .defaultSuccessUrl("/")
+                        .usernameParameter("adminName")  // 필드 이름 설정
+                        .passwordParameter("password")
+                        .permitAll()
                 )
-                .headers(
-                        (headers) ->
-                                headers.addHeaderWriter(
-                                        new XFrameOptionsHeaderWriter(
-                                                // X-Frame-Options 는 웹 페이지 내에서 다른 웹 페이지 표시 허용 여부 제어
-                                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN  // 동일 도메인 내에서 표시 허용
-                                        )
-                                )
-                )
-                .formLogin(
-                        (formLogin) ->
-                                formLogin  // Controller 에 PostMapping URL 바인딩이 없어도
-                                // POST 요청을 아래 라인에서 수신하고 인증 처리
-                                .loginPage("/admin/login")
-                                .defaultSuccessUrl("/")
-//                      AbstractHttpConfigurer::disable
-                )
-                ;
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/admin/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                );
         return http.build();
     }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
