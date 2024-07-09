@@ -6,17 +6,18 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
+@Table(name = "menu")
 public class Menu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column
     private String name;
 
     @Column
-    private Long basePrice;
+    private Long price;
 
     @Column
     private String description;

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,7 +24,7 @@ public class MenuService {
     }
 
     public String addMenu(String menuDescription, MultipartFile file,
-                        String menuName, int categoryID, long basePrice) throws IOException {
+                        String menuName, int categoryID, long price) throws IOException {
         Menu menu = new Menu();
 
         String menuImage = storageService.uploadFile(file);
@@ -30,7 +32,7 @@ public class MenuService {
         menu.setDescription(menuDescription);
         menu.setImage(menuImage);
         menu.setName(menuName);
-        menu.setBasePrice(basePrice);
+        menu.setPrice(price);
 
         Category category = categoryRepository.findById(categoryID)
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryID));
@@ -38,5 +40,21 @@ public class MenuService {
 
         menuRepository.save(menu);
         return menuImage;
+    }
+
+    public List<Menu> getAll() {
+        return menuRepository.findAll();
+    }
+
+    public List<Menu> getAllByCategory(Category category) {
+        return menuRepository.findAllByCategory(category);
+    }
+
+    public Optional<Category> getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
+    }
+
+    public List<Menu> getMenusByCategory(Long categoryId) {
+        return menuRepository.findByCategoryId(categoryId);
     }
 }
