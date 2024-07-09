@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class RequestPaymentController {
     private final PaymentService paymentService;
 
-    @GetMapping("/payment")
+    @GetMapping("/check_out")
     public OrderModuleDTO paymentPage(Model model) {
         return paymentService.makeOrderModuleDTO();
     }
 
     @ResponseBody
-    @PostMapping("/payment")
+    @PostMapping("/check_out")
     public ResponseEntity<IamportResponse<Payment>> validationPayment(@RequestBody OrderModuleDTO request) {
-        IamportResponse<Payment> IamportResponse = paymentService.paymentByCallback(request);
-        log.info("결제 응답 = {}", IamportResponse.getResponse().toString());
-        return new ResponseEntity<>(IamportResponse, HttpStatus.OK);
+        IamportResponse<Payment> iamportResponse = paymentService.paymentByCallback(request);
+        log.info("결제 응답 = {}", iamportResponse.getResponse().toString());
+        return new ResponseEntity<>(iamportResponse, HttpStatus.OK);
     }
 }
