@@ -5,14 +5,17 @@ import ac.su.kiosk.repository.CustomOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class CustomOptionService {
-    @Autowired
-    private CustomOptionRepository customOptionRepository;
+    private final CustomOptionRepository customOptionRepository;
 
-    public Optional<CustomOption> getCustomOptionsByMenu(Long id) {
-        return customOptionRepository.findById(id);
+    public CustomOptionService(CustomOptionRepository customOptionRepository) {
+        this.customOptionRepository = customOptionRepository;
+    }
+
+    public List<CustomOption> getCustomOptionsByMenu(int id) {
+        return customOptionRepository.findCustomOptionsByMenuId(id);
     }
 }
