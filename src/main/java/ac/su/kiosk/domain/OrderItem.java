@@ -23,7 +23,7 @@ public class OrderItem {
     private Menu menu;
 
     @ManyToOne
-    @JoinColumn(name = "customOptionID")
+    @JoinColumn(name = "custom_optionID")
     private CustomOption customOption;
 
     @Column(nullable = false)
