@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AdminService adminService;
 
-    @PostMapping ("/login")
+    @PostMapping ("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody AdminCreateForm adminCreateForm, BindingResult bindingResult)  {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
