@@ -32,10 +32,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers(
-                        new AntPathRequestMatcher("/api/**"),
-                        new AntPathRequestMatcher("/admin/category/**")
-                ))
+                .csrf(csrf -> csrf.disable()) //CSRF 보안 기능 끔
                 .headers(headers -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
