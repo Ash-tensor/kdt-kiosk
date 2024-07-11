@@ -5,6 +5,8 @@ import ac.su.kiosk.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
@@ -16,5 +18,10 @@ public class CategoryService {
 
     public void deleteCategory(int id) {
         categoryRepository.deleteById(id);
+    }
+
+    // 카테고리 리스트를 모두 가져오는 메서드 추가
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 }
