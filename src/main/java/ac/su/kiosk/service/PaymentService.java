@@ -110,6 +110,9 @@ public class PaymentService {
             throw new RuntimeException(e);
         }
     }
+
+
+    // 인자가 Admin admin, Payment payment 로 OrderDTO 를 ㅇ만들려했음
     public OrderModuleDTO makeOrderModuleDTO() {
 
         // 원래는
