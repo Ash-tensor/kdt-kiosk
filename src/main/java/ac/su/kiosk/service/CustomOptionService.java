@@ -2,7 +2,6 @@ package ac.su.kiosk.service;
 
 import ac.su.kiosk.domain.CustomOption;
 import ac.su.kiosk.repository.CustomOptionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,5 +16,9 @@ public class CustomOptionService {
 
     public List<CustomOption> getCustomOptionsByMenu(int id) {
         return customOptionRepository.findCustomOptionsByMenuId(id);
+    }
+
+    public List<CustomOption> getAllCustomOptions() {
+        return customOptionRepository.findAll();
     }
 }
