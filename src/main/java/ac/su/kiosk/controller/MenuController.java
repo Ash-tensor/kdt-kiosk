@@ -4,16 +4,14 @@ import ac.su.kiosk.domain.Menu;
 import ac.su.kiosk.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/menus")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class MenuController {
 
     private final MenuService menuService;
