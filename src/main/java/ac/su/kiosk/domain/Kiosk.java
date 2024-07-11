@@ -21,7 +21,4 @@ public class Kiosk {
     @Column
     private String number;
 
-    @OneToMany(mappedBy = "kiosk")
-    private List<Admin> admins;
-
 }

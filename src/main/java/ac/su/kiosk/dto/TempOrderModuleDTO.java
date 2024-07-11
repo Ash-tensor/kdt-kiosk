@@ -24,9 +24,9 @@ public class TempOrderModuleDTO {
 
     public TempOrderModuleDTO(Payment payment, Admin admin) {
         this.price = payment.getAmount();
-        Kiosk kiosk = admin.getKiosk();
-        this.storeName = kiosk.getStore().getName();
-        this.address = kiosk.getStore().getLocation();
+//        Kiosk kiosk = admin.getKiosk();
+//        this.storeName = kiosk.getStore().getName();
+//        this.address = kiosk.getStore().getLocation();
         this.email = admin.getEmail();
         this.status = payment.getPaymentStatus();
 //        this.paymentUid = UUID.randomUUID().toString();
