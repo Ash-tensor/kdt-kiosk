@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/category")
-public class CategoryController {
+public class CategorySearchController {
     private final CategoryService categoryService;
 
     // 카테고리 리스트를 모두 가져오는 엔드포인트
