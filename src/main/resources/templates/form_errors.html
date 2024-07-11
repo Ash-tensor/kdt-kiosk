@@ -1,0 +1,14 @@
+<div th:fragment="formErrorsFragment" class="alert alert-danger"
+     role="alert" th:if="${#fields.hasAnyErrors()}">
+    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+</div>
+
+<div th:fragment="formGlobalErrorsFragment" class="alert alert-danger"
+     role="alert" th:if="${#fields.hasGlobalErrors()}">
+    <div th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
+</div>
+
+<div th:fragment="simpleFormErrorsFragment" class="alert alert-danger"
+     role="alert" th:if="${param.error}">
+    사용자 ID 또는 비밀번호를 확인해 주세요
+</div>

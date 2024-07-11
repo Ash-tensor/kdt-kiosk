@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findById(Long id);
     List<Order> findByDateTime(LocalDateTime startDateTime);
+
+    List<Order> findAllByDateTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
+
 }

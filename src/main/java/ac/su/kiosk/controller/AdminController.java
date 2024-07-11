@@ -3,6 +3,7 @@ package ac.su.kiosk.controller;
 import ac.su.kiosk.domain.Admin;
 import ac.su.kiosk.dto.AdminLoginForm;
 import ac.su.kiosk.service.AdminService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
