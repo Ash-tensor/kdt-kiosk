@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface OrderModuleDTORepository extends JpaRepository<OrderModuleDTO, Long> {
     //public OrderModuleDTO findByOrderUid
     Optional<OrderModuleDTO> findByOrderUid(String orderUid);
+
+    void updateOrderModuleDTOById(Long id);
 }

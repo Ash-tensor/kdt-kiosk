@@ -12,6 +12,7 @@ import com.siot.IamportRestClient.response.Payment;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -123,6 +124,10 @@ public class PaymentService {
         orderModuleDTO.setStoreName("5조");
         orderModuleDTO.setOrderUid(UUID.randomUUID().toString());
         orderModuleDTO.setPrice(100L);
+
+        // 7/9 추가
+        orderModuleDTORepository.save(orderModuleDTO);
+
         return orderModuleDTO;
     }
 }
