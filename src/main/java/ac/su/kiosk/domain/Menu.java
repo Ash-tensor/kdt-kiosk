@@ -33,5 +33,5 @@ public class Menu {
     private boolean soldOut;
 
     @Column
-    private String tags;
+    private String tag;
 }
