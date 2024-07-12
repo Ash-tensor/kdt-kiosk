@@ -50,7 +50,7 @@ public class AdminController {
 
         Admin newAdmin = new Admin();
         newAdmin.setName(request.getName());
-        newAdmin.setPassword(passwordEncoder.encode(request.getPassword())); // 비밀번호 암호화
+        newAdmin.setPassword(request.getPassword()); // 비밀번호 암호화
         newAdmin.setEmail(request.getEmail());
         adminService.saveAdmin(newAdmin);
 
