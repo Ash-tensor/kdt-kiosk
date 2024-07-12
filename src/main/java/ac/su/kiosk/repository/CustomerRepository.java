@@ -7,5 +7,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer>, QuerydslPredicateExecutor<Customer> {
-    Optional<Customer> findByCustomerPhone(String customerPhone);
+    Optional<Customer> findByPhoneNumber(String customerPhone);
 }

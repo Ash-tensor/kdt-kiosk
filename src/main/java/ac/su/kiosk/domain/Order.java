@@ -31,6 +31,9 @@ public class Order {
 
     @Column
     private long totalPrice; // 결제모듈의 price와 매핑됨
+
+    @Column
+    private boolean isPackaged; // 포장여부
 //
 //    @Column
 //    private String orderUid; // 결제모듈의 orderUid와 매핑됨

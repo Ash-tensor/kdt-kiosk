@@ -26,7 +26,7 @@ public class Menu {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @Column(name = "sold_out")

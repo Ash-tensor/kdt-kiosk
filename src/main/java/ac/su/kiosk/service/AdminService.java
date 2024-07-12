@@ -23,7 +23,7 @@ public class AdminService {
     private final CategoryRepository categoryRepository;
 
     // 스프링 시큐리티에서 사용하는 패스워드 암호화 객체
-    private final PasswordEncoder passwordEncoder;
+    public final PasswordEncoder passwordEncoder;
 
     private final AdminRepository adminRepository;
 
