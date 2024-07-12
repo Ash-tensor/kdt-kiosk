@@ -31,9 +31,10 @@ public class MenuUpdateService {
         existingMenu.setDescription(menu.getDescription());
         existingMenu.setImage(menu.getImage());
         existingMenu.setCategory(menu.getCategory());
-        existingMenu.setOptions(menu.getOptions());
+        // options 필드를 제거한 후 수정된 코드
+        // existingMenu.setOptions(menu.getOptions()); // 이 줄을 제거합니다.
         existingMenu.setSoldOut(menu.isSoldOut());
-        existingMenu.setTags(menu.getTags());
+        existingMenu.setTag(menu.getTag());
         return menuRepository.save(existingMenu);
     }
 
