@@ -10,16 +10,19 @@ import lombok.Setter;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerID;
+    private int id;
 
     @Column
-    private String customerName;
+    private String name;
 
-    @Column
-    private String customerPhone;
+    @Column(name="phone_number",nullable=false)
+    private String phoneNumber;
 
     @Column
     private int points;
+
+    @Column
+    private String password;
 
 //    @Column
 //    private String customerAddress;
