@@ -24,7 +24,6 @@ public class AdminService {
 
     // 스프링 시큐리티에서 사용하는 패스워드 암호화 객체
     private final PasswordEncoder passwordEncoder;
-
     private final AdminRepository adminRepository;
 
     public Optional<Admin> findAdminByName(String name) {
@@ -38,6 +37,10 @@ public class AdminService {
     public void saveAdmin(Admin admin) {
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         adminRepository.save(admin);
+    }
+
+    public boolean validatePassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
 }

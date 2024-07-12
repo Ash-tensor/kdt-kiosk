@@ -19,7 +19,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(
-                                        new AntPathRequestMatcher("/**") // 로그인 경로 허용
+                                        new AntPathRequestMatcher("/**"), // 로그인 경로 허용
+                                        new AntPathRequestMatcher("/error")
                                 ).permitAll() // 위의 경로들은 모두 인증 없이 접근 가능
                                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
                 );

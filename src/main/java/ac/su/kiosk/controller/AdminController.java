@@ -17,7 +17,8 @@ import java.util.Optional;
 @RequestMapping("/api/kk/kiosk")
 public class AdminController {
     private final AdminService adminService;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> validationAdmin(@RequestBody AdminLoginForm request) {
@@ -25,7 +26,7 @@ public class AdminController {
 
         if (foundOptAdmin.isPresent()) {
             Admin foundAdmin = foundOptAdmin.get();
-            if (passwordEncoder.matches(request.getPassword(), foundAdmin.getPassword())) {
+            if (adminService.validatePassword(request.getPassword(), foundAdmin.getPassword())) {
                 LoginResponse response = new LoginResponse("Login successful", foundAdmin.getId());
                 return ResponseEntity.ok(response);
             } else {
@@ -50,7 +51,10 @@ public class AdminController {
 
         Admin newAdmin = new Admin();
         newAdmin.setName(request.getName());
-        newAdmin.setPassword(passwordEncoder.encode(request.getPassword())); // 비밀번호 암호화
+        newAdmin.setPassword(request.getPassword()); // 비밀번호 암호화
+
+//        newAdmin.setPassword(passwordEncoder.encode(request.getPassword());
+
         newAdmin.setEmail(request.getEmail());
         adminService.saveAdmin(newAdmin);
 
