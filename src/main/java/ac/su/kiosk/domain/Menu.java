@@ -29,7 +29,7 @@ public class Menu {
     @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
 
-    @Column
+    @Column(name = "sold_out")
     private boolean soldOut;
 
     @Column
