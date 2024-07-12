@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter @Setter
 @Table(name = "menu")
@@ -30,11 +28,6 @@ public class Menu {
     @ManyToOne
     @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
-
-    @ElementCollection
-    @CollectionTable(name = "menu_options", joinColumns = @JoinColumn(name = "menu_id"))
-    @Column(name = "option")
-    private List<String> options;
 
     @Column
     private boolean soldOut;
