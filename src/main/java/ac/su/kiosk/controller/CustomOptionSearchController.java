@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/menus/")
-public class CustomOptionController {
+public class CustomOptionSearchController {
 
     private final CustomOptionService customOptionService;
     private final MenuService menuService;
