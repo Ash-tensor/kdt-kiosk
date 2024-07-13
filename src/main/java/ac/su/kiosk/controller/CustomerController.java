@@ -24,9 +24,8 @@ public class CustomerController {
 
     // 전화번호로 유저를 등록하고 비밀번호 설정
     @PostMapping("/register")
-    public ResponseEntity<Customer> registerCustomer(@RequestParam String phone, @RequestParam String password) {
-        Customer customer = customerService.createCustomer(phone);
-        customerService.setPassword(customer, password);
+    public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerSetPasswordRequestDTO request) {
+        Customer customer = customerService.createCustomer(request.getPhoneNumber(), request.getPassword());
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
 }
