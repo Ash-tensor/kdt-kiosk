@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PointRequestDTO {
-    private String customerPhone;
+    private String phoneNumber;
     private int totalPrice;
     private int pointsToUse; // `usePoints` 요청에만 사용됩니다.
 }

@@ -35,6 +35,19 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    public boolean validatePassword(String phoneNumber, String password) {
+        Optional<Customer> customer = customerRepository.findByPhoneNumber(phoneNumber);
+        if (customer.isPresent()) {
+            return passwordEncoder.matches(password, customer.get().getPassword());
+        }
+        return false;
+    }
+
+    public int getPoints(String phoneNumber) {
+        Optional<Customer> customer = customerRepository.findByPhoneNumber(phoneNumber);
+        return customer.map(Customer::getPoints).orElse(0);
+    }
+
 //    // 고객이 존재하지 않으면 새로운 고객을 생성하는 메서드
 //    public Customer getOrCreateCustomer(String phoneNumber) {
 //        return getCustomerByPhone(phoneNumber).orElseGet(() -> createCustomer(phoneNumber, "1111"));

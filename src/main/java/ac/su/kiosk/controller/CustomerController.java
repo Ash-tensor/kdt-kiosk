@@ -1,6 +1,7 @@
 package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Customer;
+import ac.su.kiosk.dto.CustomerPointResponseDTO;
 import ac.su.kiosk.dto.CustomerSetPasswordRequestDTO;
 import ac.su.kiosk.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     private final CustomerService customerService;
 
-    // 입력받은 전화번호와 일치하는 유저가 있는지 확인
     @GetMapping("/{phone}")
     public ResponseEntity<Customer> getCustomerByPhone(@PathVariable String phone) {
         return customerService.getCustomerByPhone(phone)
@@ -22,10 +22,17 @@ public class CustomerController {
                 .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
-    // 전화번호로 유저를 등록하고 비밀번호 설정
     @PostMapping("/register")
     public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerSetPasswordRequestDTO request) {
         Customer customer = customerService.createCustomer(request.getPhoneNumber(), request.getPassword());
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/validatePassword")
+    public ResponseEntity<CustomerPointResponseDTO> validatePassword(@RequestBody CustomerSetPasswordRequestDTO request) {
+        boolean isValid = customerService.validatePassword(request.getPhoneNumber(), request.getPassword());
+        int points = isValid ? customerService.getPoints(request.getPhoneNumber()) : 0;
+        Customer customer = isValid ? customerService.getCustomerByPhone(request.getPhoneNumber()).orElse(null) : null;
+        return ResponseEntity.ok(new CustomerPointResponseDTO(isValid, points, customer));
     }
 }
