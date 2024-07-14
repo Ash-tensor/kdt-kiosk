@@ -4,6 +4,7 @@ import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.dto.PointRequestDTO;
 import ac.su.kiosk.service.CustomerService;
 import ac.su.kiosk.service.PointService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,20 +14,16 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/points")
+@RequiredArgsConstructor
 public class PointController {
-    private PointService pointService;
-    private CustomerService customerService;
-
-    // 전화번호로 유저 포인트 조회
-    @GetMapping("/{phone}/points")
-    public ResponseEntity<Integer> getCustomerPoints(@PathVariable String phone) {
-        return customerService.getCustomerByPhone(phone)
-                .map(customer -> ResponseEntity.ok(customer.getPoints()))
-                .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
-    }
+    private final PointService pointService;
 
     @PostMapping("/add")
     public ResponseEntity<String> addPoints(@RequestBody PointRequestDTO request) {
+        if (request.getPhoneNumber() == null || request.getPhoneNumber().isEmpty()) {
+            return ResponseEntity.badRequest().body("전화번호가 제공되지 않았습니다.");
+        }
+
         Order order = new Order();
         order.setDateTime(LocalDateTime.now());
         order.setTotalPrice(request.getTotalPrice());
@@ -37,6 +34,10 @@ public class PointController {
 
     @PostMapping("/use")
     public ResponseEntity<String> usePoints(@RequestBody PointRequestDTO request) {
+        if (request.getPhoneNumber() == null || request.getPhoneNumber().isEmpty()) {
+            return ResponseEntity.badRequest().body("전화번호가 제공되지 않았습니다.");
+        }
+
         Order order = new Order();
         order.setDateTime(LocalDateTime.now());
         order.setTotalPrice(request.getTotalPrice());
@@ -48,6 +49,4 @@ public class PointController {
             return ResponseEntity.status(400).body("불충분한 포인트");
         }
     }
-
-
 }

@@ -15,27 +15,26 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customerID", nullable = false)
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "kioskID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "kioskID", nullable = false)
     private Kiosk kiosk;
 
-    // 오류를 예방하기 위해 일단 관계없이 생성
-    // 추후 위의 JoinColumn 사용
-
-    @Column
+    @Column(name="date_time",nullable = false)
     private LocalDateTime dateTime;
 
-    @Column
-    private long totalPrice; // 결제모듈의 price와 매핑됨
+    @Column(name="total_price",nullable = false)
+    private long totalPrice;
 
-    @Column
-    private boolean isPackaged; // 포장여부
-//
-//    @Column
+    @Column(name="is_packaged",nullable = false)
+    private boolean isPackaged;
+
+//    @Column(nullable = false)
+//    private String orderUid;
+    //    @Column
 //    private String orderUid; // 결제모듈의 orderUid와 매핑됨
 
     //@Column
