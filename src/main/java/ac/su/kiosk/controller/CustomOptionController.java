@@ -40,4 +40,9 @@ public class CustomOptionController {
     public CustomOption addCustomOption(@RequestBody CustomOptionRequest request) {
         return customOptionService.addCustomOption(request.getName(), request.getAdditionalPrice(), request.getMenuId());
     }
+
+    @DeleteMapping("delete-custom-option/{id}")
+    public void deleteCustomOption(@PathVariable Long id) {
+        customOptionService.deleteCustomOption(id);
+    }
 }
