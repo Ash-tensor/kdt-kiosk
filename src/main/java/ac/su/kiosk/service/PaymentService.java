@@ -128,4 +128,19 @@ public class PaymentService {
         orderModuleDTO.setPrice(100L);
         return orderModuleDTO;
     }
+
+
+    // by ash : gpt의 주문을 위해 추가된 코드입니다.
+    public OrderModuleDTO gptOrderModuleDTO(long price) {
+        OrderModuleDTO orderModuleDTO = new OrderModuleDTO();
+        orderModuleDTO.setStatus(PaymentStatus.READY);
+        orderModuleDTO.setEmail("test@example.com");
+        orderModuleDTO.setAddress("서울특별시 노원구 화랑로");
+        orderModuleDTO.setStoreName("5조");
+        orderModuleDTO.setOrderUid(UUID.randomUUID().toString());
+        orderModuleDTO.setPrice(price);
+        orderModuleDTO.setGpt(true);
+        return orderModuleDTO;
+    }
+
 }

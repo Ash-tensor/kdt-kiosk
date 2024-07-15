@@ -30,6 +30,9 @@ public class OrderModuleDTO {
     @Column
     private String orderUid;
 
+    @Column(nullable = true)
+    private Boolean gpt;
+
     public void changePaymentBySuccess(PaymentStatus status, String paymentUid) {
         this.status = status;
         this.paymentUid = paymentUid;
