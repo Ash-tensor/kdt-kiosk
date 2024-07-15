@@ -36,4 +36,8 @@ public class CustomOptionService {
         customOption.setMenu(menu);
         return customOptionRepository.save(customOption);
     }
+
+    public void deleteCustomOption(Long id) {
+        customOptionRepository.deleteById(id);
+    }
 }
