@@ -16,25 +16,38 @@ public class CustomOptionService {
     private final CustomOptionRepository customOptionRepository;
     private final MenuRepository menuRepository;
 
-    public List<CustomOption> getCustomOptionsByMenu(int id) {
-        return customOptionRepository.findCustomOptionsByMenuId(id);
+    public CustomOption getCustomOptionById(Long id) {
+        return customOptionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid option ID"));
+    }
+
+    public List<CustomOption> getCustomOptionsByMenu(int menuId) {
+        return customOptionRepository.findCustomOptionsByMenuId(menuId);
     }
 
     public List<CustomOption> getAllCustomOptions() {
         return customOptionRepository.findAll();
     }
 
-    public List<CustomOptionDTO> getAllCustomOptionsWithMenuName() {
-        return customOptionRepository.findAllCustomOptionsWithMenuName();
+    public List<CustomOptionDTO> getAllCustomOptionsWithMenuNameAndPrice() {
+        return customOptionRepository.findAllCustomOptionsWithMenuNameAndPrice();
     }
 
-    public CustomOption addCustomOption(String name, Double additionalPrice, Integer menuId) {
+    public CustomOption createCustomOption(String name, boolean mandatory, int menuId) {
         Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new IllegalArgumentException("Invalid menu ID"));
         CustomOption customOption = new CustomOption();
         customOption.setName(name);
-        customOption.setAdditionalPrice(additionalPrice);
+        customOption.setMandatory(mandatory);
         customOption.setMenu(menu);
         return customOptionRepository.save(customOption);
+    }
+
+    public CustomOption updateCustomOption(Long id, CustomOption customOption) {
+        if (customOptionRepository.existsById(id)) {
+            customOption.setId(id);
+            return customOptionRepository.save(customOption);
+        } else {
+            return null;
+        }
     }
 
     public void deleteCustomOption(Long id) {
