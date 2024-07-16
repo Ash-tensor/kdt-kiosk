@@ -2,6 +2,7 @@ package ac.su.kiosk.service;
 
 import ac.su.kiosk.domain.CustomOption;
 import ac.su.kiosk.domain.Menu;
+import ac.su.kiosk.domain.OptionItem;
 import ac.su.kiosk.dto.CustomOptionDTO;
 import ac.su.kiosk.repository.CustomOptionRepository;
 import ac.su.kiosk.repository.MenuRepository;
@@ -32,12 +33,13 @@ public class CustomOptionService {
         return customOptionRepository.findAllCustomOptionsWithMenuNameAndPrice();
     }
 
-    public CustomOption createCustomOption(String name, boolean mandatory, int menuId) {
+    public CustomOption createCustomOption(String name, boolean mandatory, int menuId, List<OptionItem> items) {
         Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new IllegalArgumentException("Invalid menu ID"));
         CustomOption customOption = new CustomOption();
         customOption.setName(name);
         customOption.setMandatory(mandatory);
         customOption.setMenu(menu);
+        customOption.setItems(items);
         return customOptionRepository.save(customOption);
     }
 

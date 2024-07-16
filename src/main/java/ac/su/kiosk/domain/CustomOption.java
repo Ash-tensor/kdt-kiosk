@@ -18,8 +18,8 @@ public class CustomOption {
     @Column
     private String name;
 
-    @Column
-    private boolean mandatory;
+    @Column(nullable = false)
+    private boolean mandatory = false;  // 기본값 설정
 
     @ManyToOne
     @JoinColumn(name = "menu_id", nullable = false)

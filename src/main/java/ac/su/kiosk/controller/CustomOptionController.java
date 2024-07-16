@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,12 +33,19 @@ public class CustomOptionController {
 
     @PostMapping
     public ResponseEntity<CustomOption> createCustomOption(@RequestBody CustomOption customOption) {
-        CustomOption createdCustomOption = customOptionService.createCustomOption(customOption.getName(), customOption.isMandatory(), customOption.getMenu().getId());
+        if (customOption.getItems() == null) {
+            customOption.setItems(new ArrayList<>());
+        }
+        CustomOption createdCustomOption = customOptionService.createCustomOption(
+                customOption.getName(), customOption.isMandatory(), customOption.getMenu().getId(), customOption.getItems());
         return ResponseEntity.ok(createdCustomOption);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomOption> updateCustomOption(@PathVariable Long id, @RequestBody CustomOption customOption) {
+        if (customOption.getItems() == null) {
+            customOption.setItems(new ArrayList<>());
+        }
         CustomOption updatedCustomOption = customOptionService.updateCustomOption(id, customOption);
         return ResponseEntity.ok(updatedCustomOption);
     }
