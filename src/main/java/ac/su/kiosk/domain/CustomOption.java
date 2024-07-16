@@ -15,14 +15,16 @@ public class CustomOption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 옵션 이름 'SIZE' 시 - large, medium, small 로 react 에서 설정 가능하게 하는 옵션임!
     @Column
     private String name;
 
     @Column
-    private Double additionalPrice;
+    private boolean mandatory;
 
     @ManyToOne
     @JoinColumn(name = "menu_id", nullable = false)
     private Menu menu;
+
+    @OneToMany(mappedBy = "customOption", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OptionItem> items;
 }

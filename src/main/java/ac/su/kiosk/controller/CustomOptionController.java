@@ -1,48 +1,88 @@
 package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.CustomOption;
-import ac.su.kiosk.dto.CustomOptionDTO;
-import ac.su.kiosk.dto.CustomOptionRequest;
+import ac.su.kiosk.domain.OptionItem;
 import ac.su.kiosk.service.CustomOptionService;
-import ac.su.kiosk.service.MenuService;
+import ac.su.kiosk.service.OptionItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/menus/")
+@RequestMapping("/api/custom-options")
 public class CustomOptionController {
 
     private final CustomOptionService customOptionService;
-    private final MenuService menuService;
+    private final OptionItemService optionItemService;
 
-    // 특정 메뉴 ID에 대한 커스텀 옵션 가져오기
-    @GetMapping("select-custom-option/{menuId}")
-    public List<CustomOption> getCustomOptionsByMenuId(@PathVariable int menuId){
-        return customOptionService.getCustomOptionsByMenu(menuId);
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomOption> getCustomOptionById(@PathVariable Long id) {
+        CustomOption customOption = customOptionService.getCustomOptionById(id);
+        return ResponseEntity.ok(customOption);
     }
 
-    // 모든 커스텀 옵션 가져오기
-    @GetMapping("all-custom-options")
-    public List<CustomOption> getAllCustomOptions() {
-        return customOptionService.getAllCustomOptions();
-
-    }
-    // 정렬된 모든 커스텀 옵션 가져오기
-    @GetMapping("all-custom-options-with-menu-name")
-    public List<CustomOptionDTO> getAllCustomOptionsWithMenuName() {
-        return customOptionService.getAllCustomOptionsWithMenuName();
+    @GetMapping
+    public ResponseEntity<List<CustomOption>> getAllCustomOptions() {
+        List<CustomOption> customOptions = customOptionService.getAllCustomOptions();
+        return ResponseEntity.ok(customOptions);
     }
 
-    @PostMapping("add-custom-option")
-    public CustomOption addCustomOption(@RequestBody CustomOptionRequest request) {
-        return customOptionService.addCustomOption(request.getName(), request.getAdditionalPrice(), request.getMenuId());
+    @PostMapping
+    public ResponseEntity<CustomOption> createCustomOption(@RequestBody CustomOption customOption) {
+        CustomOption createdCustomOption = customOptionService.createCustomOption(customOption.getName(), customOption.isMandatory(), customOption.getMenu().getId());
+        return ResponseEntity.ok(createdCustomOption);
     }
 
-    @DeleteMapping("delete-custom-option/{id}")
-    public void deleteCustomOption(@PathVariable Long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomOption> updateCustomOption(@PathVariable Long id, @RequestBody CustomOption customOption) {
+        CustomOption updatedCustomOption = customOptionService.updateCustomOption(id, customOption);
+        return ResponseEntity.ok(updatedCustomOption);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomOption(@PathVariable Long id) {
         customOptionService.deleteCustomOption(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{optionId}/items")
+    public ResponseEntity<List<OptionItem>> getOptionItems(@PathVariable Long optionId) {
+        CustomOption customOption = customOptionService.getCustomOptionById(optionId);
+        if (customOption != null) {
+            return ResponseEntity.ok(customOption.getItems());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{optionId}/items")
+    public ResponseEntity<OptionItem> addOptionItem(@PathVariable Long optionId, @RequestBody OptionItem optionItem) {
+        CustomOption customOption = customOptionService.getCustomOptionById(optionId);
+        if (customOption != null) {
+            optionItem.setCustomOption(customOption);
+            OptionItem createdOptionItem = optionItemService.createOptionItem(optionItem);
+            return ResponseEntity.ok(createdOptionItem);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/items/{itemId}")
+    public ResponseEntity<OptionItem> updateOptionItem(@PathVariable Long itemId, @RequestBody OptionItem optionItem) {
+        OptionItem updatedOptionItem = optionItemService.updateOptionItem(itemId, optionItem);
+        if (updatedOptionItem != null) {
+            return ResponseEntity.ok(updatedOptionItem);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/items/{itemId}")
+    public ResponseEntity<Void> deleteOptionItem(@PathVariable Long itemId) {
+        optionItemService.deleteOptionItem(itemId);
+        return ResponseEntity.noContent().build();
     }
 }
