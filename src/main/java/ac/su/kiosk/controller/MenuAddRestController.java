@@ -27,8 +27,14 @@ public class MenuAddRestController {
     }
 
     @PostMapping("/new_add_rest")
-    public ResponseEntity<String> addMenu(@RequestPart MenuPictureDTO menuPictureDTO) {
+    public ResponseEntity<String> addMenu(@RequestPart("file") MultipartFile file,
+                                          @RequestPart("name") String name,
+                                          @RequestPart("categoryId") int categoryId,
+                                          @RequestPart("price") int price,
+                                          @RequestPart("soldOut") boolean soldOut,
+                                          @RequestPart("tag") String tag) {
         try {
+            MenuPictureDTO menuPictureDTO = new MenuPictureDTO();
             menuService.addMenu(menuPictureDTO);
         }
         catch (IOException e) {
