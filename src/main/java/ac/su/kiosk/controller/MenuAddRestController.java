@@ -1,6 +1,7 @@
 package ac.su.kiosk.controller;
 
 import ac.su.kiosk.dto.MenuDTO;
+import ac.su.kiosk.dto.MenuPictureDTO;
 import ac.su.kiosk.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,19 @@ public class MenuAddRestController {
         String message = menuService.addMenu(description, file, name, category, price);
         return ResponseEntity.ok("성공");
     }
+
+    @PostMapping("/new_add_rest")
+    public ResponseEntity<String> addMenu(@RequestPart MenuPictureDTO menuPictureDTO) {
+        try {
+            menuService.addMenu(menuPictureDTO);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+    }
+        return ResponseEntity.ok("성공");
+
+    }
+
 
     // 새로운 엔드포인트: 파일 업로드 없이 상품 추가
     @PostMapping("/add_rest_simple")

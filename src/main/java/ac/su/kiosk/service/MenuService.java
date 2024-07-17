@@ -3,6 +3,7 @@ package ac.su.kiosk.service;
 import ac.su.kiosk.domain.Category;
 import ac.su.kiosk.domain.Menu;
 import ac.su.kiosk.dto.MenuDTO;
+import ac.su.kiosk.dto.MenuPictureDTO;
 import ac.su.kiosk.repository.CategoryRepository;
 import ac.su.kiosk.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,26 @@ public class MenuService {
 
     public void deleteMenu(int id) {
         menuRepository.deleteById(id);
+    }
+
+    public String addMenu(MenuPictureDTO menuPictureDTO) throws IOException {
+        Menu menu = new Menu();
+
+        String menuImage = storageService.uploadFile(menuPictureDTO.getImage());
+
+        menu.setDescription(menuPictureDTO.getName());
+        menu.setImage(menuImage);
+        menu.setName(menuPictureDTO.getName());
+        menu.setPrice(menuPictureDTO.getPrice());
+        menu.setSoldOut(menuPictureDTO.isSoldOut());
+        menu.setTag(menuPictureDTO.getTag());
+
+        Category category = categoryRepository.findById(menuPictureDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + menuPictureDTO.getCategoryId()));
+        menu.setCategory(category);
+
+        menuRepository.save(menu);
+        return menuImage;
     }
 
     public String addMenu(String menuDescription, MultipartFile file,
