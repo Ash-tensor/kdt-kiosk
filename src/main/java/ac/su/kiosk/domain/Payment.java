@@ -20,7 +20,7 @@ public class Payment {
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paymentMethodID")
+    @JoinColumn(name = "payment_methodid")
     private PaymentMethod method;
 
     @Column
