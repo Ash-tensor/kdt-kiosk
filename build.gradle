@@ -88,6 +88,8 @@ dependencies {
 
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
 
+    //python으로 데이터를 보내기 위한 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 tasks.named('test') {
     useJUnitPlatform()
