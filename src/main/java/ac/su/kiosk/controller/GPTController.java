@@ -8,6 +8,7 @@ import ac.su.kiosk.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @RequiredArgsConstructor
@@ -45,9 +46,11 @@ public class GPTController {
         }
         return false;
     }
-
     @GetMapping("/get-remote-order")
     public OrderModuleDTO getRemoteOrder() {
-        return orderModuleDTORepository.findByGpt(true).get(0);
+        List<OrderModuleDTO> DTOLists = orderModuleDTORepository.findByGpt(true);
+        int lastIndex = DTOLists.size();
+        return DTOLists.get(lastIndex);
+        // 마지막 값을 출력하도록 수정
     }
 }
