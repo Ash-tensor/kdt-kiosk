@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IAMPortDTO {
+    private Long price;
     private String paymentUid;
     private String orderUid;
 }

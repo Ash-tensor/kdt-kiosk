@@ -16,7 +16,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customerID", nullable = false)
+    @JoinColumn(name = "customerID")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -31,6 +31,14 @@ public class Order {
 
     @Column(name="is_packaged",nullable = false)
     private boolean isPackaged;
+
+    @Column(name="payment_uid",nullable = false)
+    private String paymentUid;
+
+    // 결제 환불을 위한 join
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "order_module_dto")
+    private OrderModuleDTO orderModuleDTO;
 
 //    @Column(nullable = false)
 //    private String orderUid;

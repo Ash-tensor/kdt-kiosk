@@ -3,6 +3,7 @@ package ac.su.kiosk.service;
 import ac.su.kiosk.constant.PaymentStatus;
 import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.domain.OrderModuleDTO;
+import ac.su.kiosk.dto.IAMPortDTO;
 import ac.su.kiosk.repository.OrderModuleDTORepository;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -43,7 +44,7 @@ public class PaymentService {
                 .orElseThrow(() -> new IllegalArgumentException("주문이 없습니다."));
         return orderModuleDTO;
     }
-    public IamportResponse<Payment> paymentByCallback(OrderModuleDTO request) {
+    public IamportResponse<Payment> paymentByCallback(IAMPortDTO request) {
         // 이 Payment는 현재 프로젝트에서 생성한 Payment가 아닌 Iamport에서 만든 Payment
 
         try {
