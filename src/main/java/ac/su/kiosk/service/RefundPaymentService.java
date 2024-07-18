@@ -25,6 +25,10 @@ public class RefundPaymentService {
         return orderRefundDTOs;
     }
 
+    public String getPaymentUid(Long orderId){
+        return orderRepository.findById(orderId).get().getPaymentUid();
+    }
+
     public void deleteOrder(Long orderId){
         orderRepository.deleteById(orderId);
     }
