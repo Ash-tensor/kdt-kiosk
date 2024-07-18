@@ -18,7 +18,10 @@ public class CustomOption {
     @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column
+    private Double additionalPrice;
+
+    @Column
     private boolean mandatory = false;  // 기본값 설정
 
     @ManyToOne

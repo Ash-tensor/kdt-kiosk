@@ -18,4 +18,8 @@ public interface CustomOptionRepository extends JpaRepository<CustomOption, Long
             "JOIN co.menu m " +
             "JOIN co.items oi")
     List<CustomOptionDTO> findAllCustomOptionsWithMenuNameAndPrice();
+
+    @Query("SELECT new ac.su.kiosk.dto.CustomOptionDTO(co.id, co.name, co.additionalPrice, m.name) " +
+            "FROM CustomOption co JOIN co.menu m")
+    List<CustomOptionDTO> findAllCustomOptionsWithMenuName();
 }

@@ -1,7 +1,13 @@
 package ac.su.kiosk.controller;
 
+import ac.su.kiosk.domain.Category;
+import ac.su.kiosk.domain.CustomOption;
 import ac.su.kiosk.domain.Menu;
 import ac.su.kiosk.domain.StoreMenuAvailability;
+import ac.su.kiosk.dto.CustomOptionDTO;
+import ac.su.kiosk.dto.CustomOptionRequest;
+import ac.su.kiosk.service.CategoryService;
+import ac.su.kiosk.service.CustomOptionService;
 import ac.su.kiosk.service.MenuService;
 import ac.su.kiosk.service.StoreMenuAvailabilityService;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +23,18 @@ public class MenuSearchController {
 
     private final MenuService menuService;
     private final StoreMenuAvailabilityService availabilityService;
+    private final CategoryService categoryService;
+    private final CustomOptionService customOptionService;
 
     // 모든 메뉴를 검색해서 반환 ( JSON 데이터 형식 )
     @GetMapping("/all")
     public List<Menu> getAllMenu() {
         return menuService.getAll();
+    }
+
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
     // 카테고리 ID로 메뉴를 검색해서 반환 ( JSON 데이터 형식 )
@@ -50,5 +63,32 @@ public class MenuSearchController {
                 .filter(menu -> availabilityList.stream()
                         .anyMatch(availability -> availability.getMenu().getId() == menu.getId() && availability.isAvailable()))
                 .collect(Collectors.toList());
+    }
+
+    // 특정 메뉴 ID에 대한 커스텀 옵션 가져오기
+    @GetMapping("select-custom-option/{menuId}")
+    public List<CustomOption> getCustomOptionsByMenuId(@PathVariable int menuId){
+        return customOptionService.getCustomOptionsByMenu(menuId);
+    }
+    // 모든 커스텀 옵션 가져오기
+    @GetMapping("all-custom-options")
+    public List<CustomOption> getAllCustomOptions() {
+        return customOptionService.getAllCustomOptions();
+
+    }
+    // 정렬된 모든 커스텀 옵션 가져오기
+    @GetMapping("all-custom-options-with-menu-name")
+    public List<CustomOptionDTO> getAllCustomOptionsWithMenuName() {
+        return customOptionService.getAllCustomOptionsWithMenuName();
+    }
+
+    @PostMapping("add-custom-option")
+    public CustomOption addCustomOption(@RequestBody CustomOptionRequest request) {
+        return customOptionService.addCustomOption(request.getName(), request.getAdditionalPrice(), request.getMenuId());
+    }
+
+    @DeleteMapping("delete-custom-option/{id}")
+    public void deleteCustomOption(@PathVariable Long id) {
+        customOptionService.deleteCustomOption(id);
     }
 }

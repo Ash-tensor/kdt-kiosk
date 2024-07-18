@@ -6,11 +6,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/admin/category")
 @RestController
 public class CategoryAddRestController {
     private final CategoryService categoryService;
+
+    // 카테고리 리스트를 모두 가져오는 엔드포인트
+    @GetMapping("/all")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
 
     @GetMapping("/add")
     public String addCategory() {
