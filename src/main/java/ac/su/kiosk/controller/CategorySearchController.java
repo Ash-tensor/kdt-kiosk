@@ -18,6 +18,13 @@ public class CategorySearchController {
     private final CategoryService categoryService;
     private final StoreCategoryVisibilityService visibilityService;
 
+
+    // 전체 카테고리를 검색해서 반환 ( JSON 데이터 형식 )
+    @GetMapping("/all")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
+
     // 매장 ID로 카테고리를 검색해서 반환 ( JSON 데이터 형식 )
     @GetMapping("/store/{storeId}")
     public List<Category> getCategoriesByStore(@PathVariable Long storeId) {
