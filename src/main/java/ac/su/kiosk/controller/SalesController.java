@@ -64,7 +64,7 @@ public class SalesController {
 
     // Order 엔티티를 OrderDTO로 변환하는 메소드
     private OrderDTO convertToOrderDTO(Order order) {
-        return new OrderDTO(order.getId(), order.getDateTime(), order.getTotalPrice());
+        return new OrderDTO(order.getDateTime(), order.getTotalPrice());
     }
 
     // Payment 엔티티를 PaymentDTO로 변환하는 메소드

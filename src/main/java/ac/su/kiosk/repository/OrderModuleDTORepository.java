@@ -12,4 +12,6 @@ public interface OrderModuleDTORepository extends JpaRepository<OrderModuleDTO, 
     //public OrderModuleDTO findByOrderUid
     Optional<OrderModuleDTO> findByOrderUid(String orderUid);
     List<OrderModuleDTO> findByGpt(Boolean gpt);
+    Optional<OrderModuleDTO> findByPaymentUid(String paymentUid);
+
 }

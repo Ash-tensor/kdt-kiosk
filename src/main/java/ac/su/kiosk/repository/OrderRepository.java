@@ -13,4 +13,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByDateTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
 
+    Optional<Order> findByPaymentUid(String paymentUid);
 }

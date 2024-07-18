@@ -52,6 +52,20 @@ public class CustomOptionService {
         }
     }
 
+    public List<CustomOptionDTO> getAllCustomOptionsWithMenuName() {
+        return customOptionRepository.findAllCustomOptionsWithMenuName();
+    }
+
+    public CustomOption addCustomOption(String name, Double additionalPrice, Integer menuId) {
+        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new IllegalArgumentException("Invalid menu ID"));
+        CustomOption customOption = new CustomOption();
+        customOption.setName(name);
+        customOption.setAdditionalPrice(additionalPrice);
+        customOption.setMenu(menu);
+        return customOptionRepository.save(customOption);
+    }
+
+
     public void deleteCustomOption(Long id) {
         customOptionRepository.deleteById(id);
     }

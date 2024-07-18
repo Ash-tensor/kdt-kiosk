@@ -1,5 +1,6 @@
 package ac.su.kiosk.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @Table(name = "customer")
+@JsonIgnoreProperties
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
