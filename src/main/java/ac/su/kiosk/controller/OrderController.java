@@ -8,6 +8,7 @@ import ac.su.kiosk.repository.CustomerRepository;
 import ac.su.kiosk.repository.KioskRepository;
 import ac.su.kiosk.repository.OrderModuleDTORepository;
 import ac.su.kiosk.repository.OrderRepository;
+import ac.su.kiosk.service.OrderCompleteService;
 import ac.su.kiosk.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class OrderController {
     private final OrderRepository orderRepository;
 
 
+    private final OrderCompleteService orderCompleteService;
+
+
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
         Order savedOrder = new Order();
@@ -50,12 +54,16 @@ public class OrderController {
             savedOrder.setOrderModuleDTO(orderModuleDTOOptional.get());
         }
 
-        // ash - ordercomplete를 추가하기 위해 로직을 추가합니다.
+        orderRepository.save(savedOrder);
+
+
+        // ash - ordercomplete를 추가하기 위해 로직을 추가합니다. // 7.19일
         OrderComplete orderComplete = new OrderComplete();
         orderComplete.setComplete(false);
         orderComplete.setOrder(savedOrder);
+        orderCompleteService.saveOrderComplete(orderComplete);
+        // ordercomplete를 저장하기 위한 로직
 
-        orderRepository.save(savedOrder);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
 

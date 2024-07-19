@@ -15,8 +15,7 @@ public class OrderComplete {
     @Column
     private Boolean complete;
 
-    @JoinColumn(name = "customerID")
+    @JoinColumn(name = "orderID")
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column
     private Order order;
 }

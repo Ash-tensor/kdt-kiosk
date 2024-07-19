@@ -14,4 +14,8 @@ public class OrderCompleteService {
         orderCompleteRepository.save(orderComplete);
     }
 
+    public void deleteOrderComplete(Long id) {
+        // orderid를 이용해서 삭제할 수 있도록 수정
+        orderCompleteRepository.deleteAll(orderCompleteRepository.findAllByOrderId(id));
+    }
 }

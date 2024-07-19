@@ -2,6 +2,7 @@ package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.dto.OrderRefundDTO;
+import ac.su.kiosk.service.OrderCompleteService;
 import ac.su.kiosk.service.OrderItemService;
 import ac.su.kiosk.service.OrderService;
 import ac.su.kiosk.service.RefundPaymentService;
@@ -24,6 +25,7 @@ import java.util.List;
 public class RefundPaymentController {
     private final RefundPaymentService refundPaymentService;
     private final OrderItemService orderItemService;
+    private final OrderCompleteService orderCompleteService;
 
     @GetMapping("/all")
     public List<OrderRefundDTO> getAllOrders(){
@@ -41,6 +43,10 @@ public class RefundPaymentController {
             orderItemService.getOrderItem(id).forEach(orderItem -> {
                 orderItemService.deleteOrderItem(orderItem.getId());
             });
+            
+            // 추가로 completeOrder도 삭제해야함
+            orderCompleteService.deleteOrderComplete(id);
+
 
             refundPaymentService.deleteOrder(id);
             return ResponseEntity.ok("삭제됨");
