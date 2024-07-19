@@ -1,10 +1,7 @@
 package ac.su.kiosk.controller;
 
 import ac.su.kiosk.constant.PaymentStatus;
-import ac.su.kiosk.domain.Customer;
-import ac.su.kiosk.domain.Kiosk;
-import ac.su.kiosk.domain.Order;
-import ac.su.kiosk.domain.OrderModuleDTO;
+import ac.su.kiosk.domain.*;
 import ac.su.kiosk.dto.IAMPortDTO;
 import ac.su.kiosk.dto.OrderDTO;
 import ac.su.kiosk.repository.CustomerRepository;
@@ -33,8 +30,6 @@ public class OrderController {
     private final OrderRepository orderRepository;
 
 
-
-
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
         Order savedOrder = new Order();
@@ -54,6 +49,12 @@ public class OrderController {
         if(orderModuleDTOOptional.isPresent()) {
             savedOrder.setOrderModuleDTO(orderModuleDTOOptional.get());
         }
+
+        // ash - ordercomplete를 추가하기 위해 로직을 추가합니다.
+        OrderComplete orderComplete = new OrderComplete();
+        orderComplete.setComplete(false);
+        orderComplete.setOrder(savedOrder);
+
         orderRepository.save(savedOrder);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
