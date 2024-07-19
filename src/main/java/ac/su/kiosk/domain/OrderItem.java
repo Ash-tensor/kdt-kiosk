@@ -1,5 +1,6 @@
 package ac.su.kiosk.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,8 @@ import java.math.BigDecimal;
 @Entity
 @Getter @Setter
 @Table(name = "orderitem")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +34,5 @@ public class OrderItem {
 
     @Column(nullable = false)
     Long price;
+
 }

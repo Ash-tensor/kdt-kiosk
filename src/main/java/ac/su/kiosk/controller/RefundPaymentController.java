@@ -2,6 +2,7 @@ package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.dto.OrderRefundDTO;
+import ac.su.kiosk.service.OrderItemService;
 import ac.su.kiosk.service.OrderService;
 import ac.su.kiosk.service.RefundPaymentService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequestMapping("/admin/payment")
 public class RefundPaymentController {
     private final RefundPaymentService refundPaymentService;
+    private final OrderItemService orderItemService;
 
     @GetMapping("/all")
     public List<OrderRefundDTO> getAllOrders(){
@@ -30,7 +32,16 @@ public class RefundPaymentController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteOrder(@RequestParam(value = "id", required = false) Long id) {
-        if(refund(refundPaymentService.getPaymentUid(id))){
+
+        // ash: fun refund << 환불에 성공하면 true를 반환하는 로직
+        if(refund(refundPaymentService.getPaymentUid(id))) {
+            // 환불이 true이면 오더 id에 따라 orderItem부터 모두 삭제해야함
+            // ash: 24.07.19 테스트 완료
+
+            orderItemService.getOrderItem(id).forEach(orderItem -> {
+                orderItemService.deleteOrderItem(orderItem.getId());
+            });
+
             refundPaymentService.deleteOrder(id);
             return ResponseEntity.ok("삭제됨");
         }

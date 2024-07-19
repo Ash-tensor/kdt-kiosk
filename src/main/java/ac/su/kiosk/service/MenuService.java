@@ -84,4 +84,8 @@ public class MenuService {
         existingMenu.setSoldOut(menuDto.isSoldOut());
         existingMenu.setTag(menuDto.getTag());
     }
+
+    public Optional<Menu> getMenuById(int id) {
+        return menuRepository.findById(id);
+    }
 }
