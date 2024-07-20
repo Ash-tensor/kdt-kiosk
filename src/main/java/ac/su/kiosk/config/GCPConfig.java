@@ -27,6 +27,7 @@ package ac.su.kiosk.config;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -34,14 +35,29 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 public class GCPConfig {
+    private static final Logger logger = LoggerFactory.getLogger(GCPConfig.class);
+
     @Bean
     public Storage storage() throws IOException {
         String credentialsPath = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(credentialsPath))
-                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
-        return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+        if (credentialsPath == null) {
+            throw new IllegalStateException("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.");
+        }
+
+        logger.info("Using GOOGLE_APPLICATION_CREDENTIALS from: " + credentialsPath);
+
+        try (FileInputStream credentialsStream = new FileInputStream(credentialsPath)) {
+            GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream)
+                    .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
+            return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+        } catch (IOException e) {
+            logger.error("Failed to load GoogleCredentials from path: " + credentialsPath, e);
+            throw e;
+        }
     }
 }
