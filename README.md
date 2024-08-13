@@ -35,9 +35,16 @@
 <img src="src/main/resources/asset/img.png">
 
 ## 설치 및 실행 방법
-### 1. 클론 저장소
-```bash
-git clone https://github.com/your-repo/kiosk.git
-cd kiosk
-```
 
+https://white-faculty-427513-f2.de.r.appspot.com/
+에서 배포중
+
+## 프로젝트 계획 관리(JIRA timeline)
+
+<img src="src/main/resources/asset/img_2.png">
+
+<img src="src/main/resources/asset/img_3.png">
+
+## show details
+
+<iframe src="https://docs.google.com/presentation/d/1fMRS4e7fqFJVvyF9EAUNxxSPNUnK2aXU/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1920" height="1109" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
