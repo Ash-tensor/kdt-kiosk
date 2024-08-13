@@ -47,4 +47,4 @@ https://white-faculty-427513-f2.de.r.appspot.com/
 
 ## show details
 
-<iframe src="https://docs.google.com/presentation/d/1fMRS4e7fqFJVvyF9EAUNxxSPNUnK2aXU/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1920" height="1109" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+https://docs.google.com/presentation/d/1fMRS4e7fqFJVvyF9EAUNxxSPNUnK2aXU/pub?start=false&loop=false&delayms=3000
