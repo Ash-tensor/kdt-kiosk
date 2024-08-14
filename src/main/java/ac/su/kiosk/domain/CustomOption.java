@@ -29,5 +29,5 @@ public class CustomOption {
     private Menu menu;
 
     @OneToMany(mappedBy = "customOption", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OptionItem> items;
+    private List<OptionItem> optionItem;
 }
