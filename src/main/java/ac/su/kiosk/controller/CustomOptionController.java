@@ -33,18 +33,18 @@ public class CustomOptionController {
 
     @PostMapping
     public ResponseEntity<CustomOption> createCustomOption(@RequestBody CustomOption customOption) {
-        if (customOption.getItems() == null) {
-            customOption.setItems(new ArrayList<>());
+        if (customOption.getOptionItem() == null) {
+            customOption.setOptionItem(new ArrayList<>());
         }
         CustomOption createdCustomOption = customOptionService.createCustomOption(
-                customOption.getName(), customOption.isMandatory(), customOption.getMenu().getId(), customOption.getItems());
+                customOption.getName(), customOption.isMandatory(), customOption.getMenu().getId(), customOption.getOptionItem());
         return ResponseEntity.ok(createdCustomOption);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomOption> updateCustomOption(@PathVariable Long id, @RequestBody CustomOption customOption) {
-        if (customOption.getItems() == null) {
-            customOption.setItems(new ArrayList<>());
+        if (customOption.getOptionItem() == null) {
+            customOption.setOptionItem(new ArrayList<>());
         }
         CustomOption updatedCustomOption = customOptionService.updateCustomOption(id, customOption);
         return ResponseEntity.ok(updatedCustomOption);
@@ -60,7 +60,7 @@ public class CustomOptionController {
     public ResponseEntity<List<OptionItem>> getOptionItems(@PathVariable Long optionId) {
         CustomOption customOption = customOptionService.getCustomOptionById(optionId);
         if (customOption != null) {
-            return ResponseEntity.ok(customOption.getItems());
+            return ResponseEntity.ok(customOption.getOptionItem());
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -39,7 +39,7 @@ public class CustomOptionService {
         customOption.setName(name);
         customOption.setMandatory(mandatory);
         customOption.setMenu(menu);
-        customOption.setItems(items);
+        customOption.setOptionItem(items);
         return customOptionRepository.save(customOption);
     }
 
