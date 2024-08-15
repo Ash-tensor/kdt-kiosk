@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!--  1) 주문 정보 및 결제 정보 로그 저장
+    2) 결제 실패에 대한 로그 저장
+    3) 사용자의 버튼 이벤트 정보 로그 저장
+    4) 메뉴 페이지의 지속 시간?(얼마나 메뉴 페이지에 머물고 있나) 로그 저장
+    5) 소프트웨어 업데이트 로그 저장  -->
+
     <!--  0. Spring Boot 기본 콘솔 로그 출력을 그대로 유지하기  -->
     <SpringProfile name="default">
         <!--  CONSOLE & FILE Appender 기본 정의 불러오기  -->
@@ -44,6 +50,45 @@
         </encoder>
     </appender>
 
+    <!--  3. UserButtonEventLogger 전용 파일 Appender  -->
+    <appender name="USER_BUTTON_EVENT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/user-button-event.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/user-button-event.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level %d{yy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--  4. MenuPageDurationLogger 전용 파일 Appender  -->
+    <appender name="MENU_PAGE_DURATION_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/menu-page-duration.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/menu-page-duration.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level %d{yy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--  5. SoftwareUpdateLogger 전용 파일 Appender  -->
+    <appender name="SOFTWARE_UPDATE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/software-update.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/software-update.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level %d{yy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- root 는 기본 logger -->
     <root level="INFO">
         <!--  기본 콘솔 출력 설정 -->
@@ -65,6 +110,30 @@
             name="ac.su.kiosk.logger.OrderCompleteLogger"
             additivity="false">
         <appender-ref ref="ORDER_COMPLETE_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!--  사용자 버튼 이벤트 로그 설정  -->
+    <logger level="INFO"
+            name="ac.su.kiosk.logger.UserButtonEventLogger"
+            additivity="false">
+        <appender-ref ref="USER_BUTTON_EVENT_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!--  메뉴 페이지 지속 시간 로그 설정  -->
+    <logger level="INFO"
+            name="ac.su.kiosk.logger.MenuPageDurationLogger"
+            additivity="false">
+        <appender-ref ref="MENU_PAGE_DURATION_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!--  소프트웨어 업데이트 로그 설정  -->
+    <logger level="INFO"
+            name="ac.su.kiosk.logger.SoftwareUpdateLogger"
+            additivity="false">
+        <appender-ref ref="SOFTWARE_UPDATE_FILE"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 </configuration>
