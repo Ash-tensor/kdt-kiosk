@@ -88,6 +88,8 @@ dependencies {
 
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
 
+    // logger 로직을 위한 AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 tasks.named('test') {
     useJUnitPlatform()
