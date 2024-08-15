@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--  0. Spring Boot 기본 콘솔 로그 출력을 그대로 유지하기  -->
+    <SpringProfile name="default">
+        <!--  CONSOLE & FILE Appender 기본 정의 불러오기  -->
+        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    </SpringProfile>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/spring-application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/spring-application.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>  <!--  minutely  -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%-5level %d{yy-MM-dd HH:mm:ss} - %msg%n</pattern>-->
+        </encoder>
+    </appender>
+
+    <!--  1. PaymentFailureLogger 전용 파일 Appender  -->
+    <appender name="PAYMENT_FAILURE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/payment-failure.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/payment-failure.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level %d{yy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--  2. OrderCompleteLogger 전용 파일 Appender  -->
+    <appender name="ORDER_COMPLETE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/order-complete.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/order-complete.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level %d{yy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- root 는 기본 logger -->
+    <root level="INFO">
+        <!--  기본 콘솔 출력 설정 -->
+        <appender-ref ref="CONSOLE"/>
+        <!--  기본 파일 출력 설정 -->
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!--  결제 실패 로그 설정  -->
+    <logger level="ERROR"
+            name="ac.su.kiosk.logger.PaymentFailureLogger"
+            additivity="false">
+        <appender-ref ref="PAYMENT_FAILURE_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!--  주문 완료 로그 설정  -->
+    <logger level="INFO"
+            name="ac.su.kiosk.logger.OrderCompleteLogger"
+            additivity="false">
+        <appender-ref ref="ORDER_COMPLETE_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+</configuration>
