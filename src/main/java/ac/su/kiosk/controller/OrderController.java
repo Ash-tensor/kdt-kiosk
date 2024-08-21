@@ -4,6 +4,7 @@ import ac.su.kiosk.constant.PaymentStatus;
 import ac.su.kiosk.domain.*;
 import ac.su.kiosk.dto.IAMPortDTO;
 import ac.su.kiosk.dto.OrderDTO;
+import ac.su.kiosk.logDto.OrderRequest;
 import ac.su.kiosk.repository.CustomerRepository;
 import ac.su.kiosk.repository.KioskRepository;
 import ac.su.kiosk.repository.OrderModuleDTORepository;
@@ -75,5 +76,4 @@ public class OrderController {
         orderModuleDTO.setStatus(PaymentStatus.OK);
         orderModuleDTORepository.save(orderModuleDTO);
     }
-
 }

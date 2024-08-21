@@ -15,7 +15,7 @@ import java.util.UUID;
 public class LoggingAspect {
 
     // AfterReturning 어노테이션을 사용하여 메서드 실행 후에 로깅을 수행
-    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.OrderController.completeOrder(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.OrderController.createIamPortDto(..))", returning = "result")
     public void logAfterOrderCompletion(JoinPoint joinPoint, Object result) {
         OrderRequest orderRequest = (OrderRequest) joinPoint.getArgs()[0];  // DTO 추출
 
@@ -66,7 +66,7 @@ public class LoggingAspect {
         );
     }
 
-    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.MenuController.menuPageDuration(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.MenuStayController.menuPageDuration(..))", returning = "result")
     public void logMenuPageDuration(JoinPoint joinPoint, Object result) {
         MenuPageDurationRequest menuPageDurationRequest = (MenuPageDurationRequest) joinPoint.getArgs()[0];  // DTO 추출
 
@@ -79,7 +79,7 @@ public class LoggingAspect {
         );
     }
 
-    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.UpdateController.softwareUpdate(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.VersionUpdateController.softwareUpdate(..))", returning = "result")
     public void logSoftwareUpdate(JoinPoint joinPoint, Object result) {
         SoftwareUpdateRequest softwareUpdateRequest = (SoftwareUpdateRequest) joinPoint.getArgs()[0];  // DTO 추출
 
