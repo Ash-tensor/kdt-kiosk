@@ -4,15 +4,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 @Configuration
 @EnableWebSecurity  // URL 요청에 대한 Spring Security 동작 활성화
 public class SecurityConfig {
-    @Bean
+    // 기존 SecurityFilter
+/*    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화
@@ -35,6 +37,29 @@ public class SecurityConfig {
 //                                .logoutSuccessUrl("/login") // 로그아웃 성공 시 리디렉션할 URL
 //                                .invalidateHttpSession(true) // 로그아웃 시 세션 무효화
 //                );
+        return http.build();
+    }*/
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .httpBasic(AbstractHttpConfigurer::disable) // Deprecated됨
+                .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화
+                .authorizeHttpRequests(  // 요청 인가 여부 결정을 위한 조건 판단
+                        authorizeHttpRequests -> authorizeHttpRequests
+                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/api/kk/kiosk/**").permitAll()
+                                .requestMatchers("/admin/category/**").authenticated()
+                                .requestMatchers("/admin/menu/**").authenticated()
+                                .requestMatchers("/admin/payment/**").authenticated()
+                                .anyRequest().permitAll()
+                )
+                // JWT 세션 사용 안함
+                .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // React는 Form이 아니기 때문에 사용 안함
+                .formLogin(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
 
