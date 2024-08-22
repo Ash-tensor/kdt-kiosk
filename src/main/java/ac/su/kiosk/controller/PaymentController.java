@@ -58,4 +58,5 @@ public class PaymentController {
             log.info("결제 실패 사유 = {}", failureReason);
             return new ResponseEntity<>(failureReason, HttpStatus.OK);
         }
+        // react 단 alert 경고 창을 띄울 때 사용
 }

@@ -15,9 +15,11 @@ import java.util.UUID;
 public class LoggingAspect {
 
     // AfterReturning 어노테이션을 사용하여 메서드 실행 후에 로깅을 수행
-    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.OrderController.createIamPortDto(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* ac.su.kiosk.controller.OrderController.createOrderRequest(..))", returning = "result")
     public void logAfterOrderCompletion(JoinPoint joinPoint, Object result) {
         OrderRequest orderRequest = (OrderRequest) joinPoint.getArgs()[0];  // DTO 추출
+
+//        String existingUuid = orderRequest.getUuid();
 
         OrderCompleteLogger.logOrder(
                 "ORDER_COMPLETE",
@@ -26,7 +28,7 @@ public class LoggingAspect {
                 "POST",
                 orderRequest.getStoreId(),
                 orderRequest.getKioskId(),
-                UUID.randomUUID().toString(),
+                "-",
                 orderRequest.getProductId(),
                 orderRequest.getOrderId(),
                 orderRequest.getPayload(),

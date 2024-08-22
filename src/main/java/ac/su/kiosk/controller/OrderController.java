@@ -76,4 +76,9 @@ public class OrderController {
         orderModuleDTO.setStatus(PaymentStatus.OK);
         orderModuleDTORepository.save(orderModuleDTO);
     }
+
+    @PostMapping("/createOrderRequest")
+    public void createOrderRequest(@RequestBody OrderRequest orderRequest) {
+        orderService.convertToOrderModuleDTO(orderRequest);
+    }
 }

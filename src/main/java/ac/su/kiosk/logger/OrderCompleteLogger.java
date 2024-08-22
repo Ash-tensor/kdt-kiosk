@@ -17,7 +17,7 @@ public class OrderCompleteLogger {
             String transactionId,   // 요청 고유값
             String productId,       // 주문한 상품 ID
             String orderId,         // 주문 번호
-            String payload,         // 수량 또는 커스텀 옵션 데이터
+            String payload,         //
             boolean isVoiceOrder    // 음성 주문 여부
     ) {
         logger.info(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
