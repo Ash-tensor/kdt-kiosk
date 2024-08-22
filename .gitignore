@@ -186,3 +186,4 @@ out/
 /node_modules/scheduler/unstable_post_task.js
 /node_modules/react-modal/UPGRADE_GUIDE.md
 /node_modules/warning/warning.js
+src/main/resources/application.properties
