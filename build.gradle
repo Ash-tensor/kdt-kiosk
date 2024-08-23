@@ -42,6 +42,10 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    implementation 'com.amazonaws:aws-java-sdk-rekognition:1.12.770'
+    implementation 'com.amazonaws:aws-java-sdk-core:1.12.770'
+
+
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
 
     // Google Cloud Secret Manager 사용을 위한 의존성 추가 -t
