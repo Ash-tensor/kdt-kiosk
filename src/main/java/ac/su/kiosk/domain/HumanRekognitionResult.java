@@ -1,8 +1,10 @@
 package ac.su.kiosk.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter @Setter
 @Entity
 @Table(name = "human_rekognition")
 public class HumanRekognitionResult {
