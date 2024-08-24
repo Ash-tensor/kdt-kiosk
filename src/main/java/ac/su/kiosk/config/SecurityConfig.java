@@ -1,5 +1,8 @@
 package ac.su.kiosk.config;
 
+import ac.su.kiosk.jwt.JwtAuthenticationFilter;
+import ac.su.kiosk.jwt.JwtProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +15,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 
 @Configuration
 @EnableWebSecurity  // URL 요청에 대한 Spring Security 동작 활성화
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final JwtProvider jwtProvider;
     // 기존 SecurityFilter
 /*    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -49,10 +54,10 @@ public class SecurityConfig {
                         authorizeHttpRequests -> authorizeHttpRequests
                                 .requestMatchers("/**").permitAll()
                                 .requestMatchers("/api/kk/kiosk/**").permitAll()
-                                .requestMatchers("/admin/category/**").authenticated()
-                                .requestMatchers("/admin/menu/**").authenticated()
-                                .requestMatchers("/admin/payment/**").authenticated()
-                                .anyRequest().permitAll()
+//                                .requestMatchers("/admin/category/**").authenticated()
+//                                .requestMatchers("/admin/menu/**").authenticated()
+//                                .requestMatchers("/admin/payment/**").authenticated()
+                                .anyRequest().authenticated()
                 )
                 // JWT 세션 사용 안함
                 .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer
@@ -66,5 +71,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtProvider);
     }
 }

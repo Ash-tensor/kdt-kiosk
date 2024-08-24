@@ -4,6 +4,8 @@ import ac.su.kiosk.constant.PaymentStatus;
 import ac.su.kiosk.domain.*;
 import ac.su.kiosk.dto.IAMPortDTO;
 import ac.su.kiosk.dto.OrderDTO;
+import ac.su.kiosk.jwt.AccessTokenDTO;
+import ac.su.kiosk.jwt.JwtProvider;
 import ac.su.kiosk.repository.CustomerRepository;
 import ac.su.kiosk.repository.KioskRepository;
 import ac.su.kiosk.repository.OrderModuleDTORepository;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -29,19 +32,32 @@ public class OrderController {
     private final CustomerRepository customerRepository;
     private final KioskRepository kioskRepository;
     private final OrderRepository orderRepository;
+    private final JwtProvider jwtProvider;
 
 
     private final OrderCompleteService orderCompleteService;
 
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<Order> createOrder(
+            @RequestHeader("Authorization") String token,
+            @RequestBody OrderDTO orderDTO) {
         Order savedOrder = new Order();
+        String accessTokenDTO;
+        User user = new User();
+        if (token != null && token.startsWith("Bearer")) {
+            // React에서 요청 Header를 "Bearer 토큰" 형식으로 보냄
+            // 접두사(Bearer) 제거
+            // = Claim 에 해당하는 String 을 리턴
+            accessTokenDTO = token.substring(7);
+            user = jwtProvider.getUser(accessTokenDTO);
+        }
+
         Optional<Customer> customerOptional = customerRepository.findById(orderDTO.getCustomerId());
         if(customerOptional.isPresent()) {
             savedOrder.setCustomer(customerOptional.get());
         }
-        Optional<Kiosk> kioskOptional = kioskRepository.findById(orderDTO.getKioskId());
+        Optional<Kiosk> kioskOptional = kioskRepository.findById(user.getKiosk().getId());
         if(kioskOptional.isPresent()) {
             savedOrder.setKiosk(kioskOptional.get());
         }

@@ -2,15 +2,20 @@ package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Admin;
 import ac.su.kiosk.domain.OrderModuleDTO;
+import ac.su.kiosk.domain.User;
 import ac.su.kiosk.dto.AdminLoginForm;
 import ac.su.kiosk.dto.LoginResponse;
+import ac.su.kiosk.jwt.AccessTokenDTO;
+import ac.su.kiosk.jwt.JwtProvider;
 import ac.su.kiosk.service.AdminService;
+import ac.su.kiosk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +24,12 @@ import java.util.Optional;
 @RequestMapping("/api/kk/kiosk")
 public class AdminController {
     private final AdminService adminService;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
 
-    @PostMapping("/login")
+/*    @PostMapping("/login")
     public ResponseEntity<LoginResponse> validationAdmin(@RequestBody AdminLoginForm request) {
         Optional<Admin> foundOptAdmin = adminService.findAdminByName(request.getName());
 
@@ -30,6 +37,25 @@ public class AdminController {
             Admin foundAdmin = foundOptAdmin.get();
             if (passwordEncoder.matches(request.getPassword(), foundAdmin.getPassword())) {
                 LoginResponse response = new LoginResponse("Login successful", foundAdmin.getId());
+                return ResponseEntity.ok(response);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }*/
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> validationAdmin(@RequestBody AdminLoginForm request) {
+        Optional<User> foundOptUser = userService.findByName(request.getName());
+        if (foundOptUser.isPresent()) {
+            User foundUser = foundOptUser.get();
+            if (passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {
+                String accessToken = jwtProvider.generateToken(foundUser, Duration.ofHours(1L));
+                String tokenType = "Bearer";
+                AccessTokenDTO accessTokenDTO = new AccessTokenDTO(accessToken, tokenType);
+                // React에 전달 할 때 토큰의 값만 전송
+                LoginResponse response = new LoginResponse(accessTokenDTO.getAccessToken(), foundUser.getId());
                 return ResponseEntity.ok(response);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
@@ -55,7 +81,9 @@ public class AdminController {
         newAdmin.setName(request.getName());
         newAdmin.setPassword(request.getPassword()); // 비밀번호 암호화
         newAdmin.setEmail(request.getEmail());
-        adminService.saveAdmin(newAdmin);
+        Admin admin = adminService.saveAdmin(newAdmin);
+        userService.saveAdminUser(admin);
+
 
         return new ResponseEntity<>("Admin registered successfully", HttpStatus.CREATED);
     }
