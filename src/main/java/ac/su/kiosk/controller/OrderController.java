@@ -6,6 +6,7 @@ import ac.su.kiosk.dto.IAMPortDTO;
 import ac.su.kiosk.dto.OrderDTO;
 import ac.su.kiosk.jwt.AccessTokenDTO;
 import ac.su.kiosk.jwt.JwtProvider;
+import ac.su.kiosk.logDto.OrderRequest;
 import ac.su.kiosk.repository.CustomerRepository;
 import ac.su.kiosk.repository.KioskRepository;
 import ac.su.kiosk.repository.OrderModuleDTORepository;
@@ -92,4 +93,8 @@ public class OrderController {
         orderModuleDTORepository.save(orderModuleDTO);
     }
 
+    @PostMapping("/createOrderRequest")
+    public void createOrderRequest(@RequestBody OrderRequest orderRequest) {
+        orderService.convertToOrderModuleDTO(orderRequest);
+    }
 }

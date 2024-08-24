@@ -51,4 +51,12 @@ public class PaymentController {
 //        log.info("결제 응답 = {}", IamportResponse.getResponse().toString());
 //        return new ResponseEntity<>(IamportResponse, HttpStatus.OK);
 //    }
+
+        @PostMapping("/failPayment")
+        public ResponseEntity<String> failPayment(@RequestBody IAMPortDTO request) {
+            String failureReason = String.valueOf(paymentService.paymentByCallback(request));
+            log.info("결제 실패 사유 = {}", failureReason);
+            return new ResponseEntity<>(failureReason, HttpStatus.OK);
+        }
+        // react 단 alert 경고 창을 띄울 때 사용
 }
