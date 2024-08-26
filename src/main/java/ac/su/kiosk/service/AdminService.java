@@ -35,9 +35,9 @@ public class AdminService {
         return adminRepository.findByEmail(email);
     }
 
-    public void saveAdmin(Admin admin) {
+    public Admin saveAdmin(Admin admin) {
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        adminRepository.save(admin);
+        return adminRepository.save(admin);
     }
 
 }

@@ -1,6 +1,7 @@
 package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Order;
+import ac.su.kiosk.dto.IAmPortProperty;
 import ac.su.kiosk.dto.OrderRefundDTO;
 import ac.su.kiosk.service.OrderCompleteService;
 import ac.su.kiosk.service.OrderItemService;
@@ -26,6 +27,7 @@ public class RefundPaymentController {
     private final RefundPaymentService refundPaymentService;
     private final OrderItemService orderItemService;
     private final OrderCompleteService orderCompleteService;
+    private final IAmPortProperty iAmPortProperty;
 
     @GetMapping("/all")
     public List<OrderRefundDTO> getAllOrders(){
@@ -62,7 +64,7 @@ public class RefundPaymentController {
             HttpClient client = HttpClient.newHttpClient();
 
             // 요청 바디 작성
-            String jsonInputString = "{\"imp_key\": \"3138755861825685\", \"imp_secret\": \"r8nLkhIcnS0ml1IUnbWIDRklNnoUWMpMmsjQmeU7jbfAlDrnKEjKSZ5vaxGajaKRLMx8N2eH7C9ujrtL\"}";
+            String jsonInputString = "{\"imp_key\": \""+iAmPortProperty.getApiKey()+"\", \"imp_secret\": \""+iAmPortProperty.getSecretKey()+"\"}";
 
             // HttpRequest 생성
             HttpRequest request = HttpRequest.newBuilder()

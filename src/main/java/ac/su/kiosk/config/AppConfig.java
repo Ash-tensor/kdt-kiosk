@@ -1,16 +1,18 @@
 package ac.su.kiosk.config;
 
+import ac.su.kiosk.dto.IAmPortProperty;
 import com.siot.IamportRestClient.IamportClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class AppConfig {
-    String apiKey = "3138755861825685";
-    String secretKey = "r8nLkhIcnS0ml1IUnbWIDRklNnoUWMpMmsjQmeU7jbfAlDrnKEjKSZ5vaxGajaKRLMx8N2eH7C9ujrtL";
+    private final IAmPortProperty iAmPortProperty;
 
     @Bean
     public IamportClient iamportClient() {
-        return new IamportClient(apiKey, secretKey);
+        return new IamportClient(iAmPortProperty.getApiKey(), iAmPortProperty.getSecretKey());
     }
 }
