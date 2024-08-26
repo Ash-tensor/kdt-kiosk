@@ -18,5 +18,13 @@ public interface OrderCompleteRepository extends JpaRepository<OrderComplete, Lo
     @Query("update OrderComplete oc set oc.complete = true where oc.id = :id")
     void updateById(Long id);
 
+    @Query("select " +
+            "oc from OrderComplete oc " +
+            "JOIN FETCH oc.order o " +
+            "JOIN FETCH o.orderModuleDTO omd " +
+            "where oc.complete = :target")
     List<OrderComplete> findAllByComplete(Boolean target);
+
+//    @Query("select oc from OrderComplete oc JOIN FETCH oc.order where oc.complete = :target")
+//    List<OrderComplete> findAllByCompleteTest(Boolean target);
 }
