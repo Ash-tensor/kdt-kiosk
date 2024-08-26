@@ -1,5 +1,6 @@
 package ac.su.kiosk.dto;
 
+import ac.su.kiosk.jwt.AccessTokenDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class LoginResponse {
-    private String message;
+    private String token;
     private int adminId;
 }

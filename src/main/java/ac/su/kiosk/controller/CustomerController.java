@@ -6,6 +6,7 @@ import ac.su.kiosk.dto.CustomerPointResponseDTO;
 import ac.su.kiosk.dto.CustomerSetPasswordRequestDTO;
 import ac.su.kiosk.dto.PointRequestDTO;
 import ac.su.kiosk.service.CustomerService;
+import ac.su.kiosk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/customer")
 public class CustomerController {
     private final CustomerService customerService;
+    private final UserService userService;
 
     @GetMapping("/{phone}")
     public ResponseEntity<Customer> getCustomerByPhone(@PathVariable String phone) {
@@ -29,6 +31,7 @@ public class CustomerController {
     @PostMapping("/register")
     public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerSetPasswordRequestDTO request) {
         Customer customer = customerService.createCustomer(request.getPhoneNumber(), request.getPassword());
+        userService.saveCustomerUser(customer);
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
 

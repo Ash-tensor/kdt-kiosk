@@ -27,13 +27,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/request_payment")
 public class RequestPaymentController {
-    @Autowired
     private final PaymentService paymentService;
-    @Autowired
     private final AdminRepository adminRepository;
-    @Autowired
     private final StoreRepository storeRepository;
-    @Autowired
     private final OrderModuleDTORepository orderModuleDTORepository;
 
     @GetMapping("/check_out/{adminId}")
