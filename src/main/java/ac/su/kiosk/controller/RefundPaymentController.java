@@ -1,12 +1,10 @@
 package ac.su.kiosk.controller;
 
+import ac.su.kiosk.domain.HumanRekognitionResult;
 import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.dto.IAmPortProperty;
 import ac.su.kiosk.dto.OrderRefundDTO;
-import ac.su.kiosk.service.OrderCompleteService;
-import ac.su.kiosk.service.OrderItemService;
-import ac.su.kiosk.service.OrderService;
-import ac.su.kiosk.service.RefundPaymentService;
+import ac.su.kiosk.service.*;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +27,7 @@ public class RefundPaymentController {
     private final OrderItemService orderItemService;
     private final OrderCompleteService orderCompleteService;
     private final IAmPortProperty iAmPortProperty;
+    private final HumanRekognitionService humanRekognitionService;
 
     @GetMapping("/all")
     public List<OrderRefundDTO> getAllOrders(){
@@ -39,7 +38,7 @@ public class RefundPaymentController {
     public ResponseEntity<String> deleteOrder(@RequestParam(value = "id", required = false) Long id) {
 
         // ash: fun refund << 환불에 성공하면 true를 반환하는 로직
-        if(refund(refundPaymentService.getPaymentUid(id))) {
+        if (refund(refundPaymentService.getPaymentUid(id))) {
             // 환불이 true이면 오더 id에 따라 orderItem부터 모두 삭제해야함
             // ash: 24.07.19 테스트 완료
 
@@ -49,6 +48,12 @@ public class RefundPaymentController {
             
             // 추가로 completeOrder도 삭제해야함
             orderCompleteService.deleteOrderComplete(id);
+
+
+            // 추가로 humanRekognitionResult도 삭제해야함 (order에 대한 정보를 가지고 있으므로)
+            HumanRekognitionResult targetHRR = humanRekognitionService.getHumanRekognitionResultByOrder(id);
+            humanRekognitionService.deleteHumanRekognitionResult(targetHRR);
+            //
 
 
             refundPaymentService.deleteOrder(id);

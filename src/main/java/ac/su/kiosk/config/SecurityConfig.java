@@ -57,7 +57,7 @@ public class SecurityConfig {
 //                                .requestMatchers("/admin/category/**").authenticated()
 //                                .requestMatchers("/admin/menu/**").authenticated()
 //                                .requestMatchers("/admin/payment/**").authenticated()
-                                .anyRequest().authenticated()
+//                                .anyRequest().authenticated()
                 )
                 // JWT 세션 사용 안함
                 .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer

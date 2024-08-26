@@ -3,6 +3,7 @@ package ac.su.kiosk.service;
 import ac.su.kiosk.domain.HumanRekognitionResult;
 import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.repository.HumanRekognitionRepository;
+import ac.su.kiosk.repository.OrderRepository;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.model.*;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +25,8 @@ public class HumanRekognitionService {
     private final HumanRekognitionRepository humanRekognitionRepository;
     @Autowired
     private AmazonRekognition client;
+
+    private final OrderRepository orderRepository;
 
     public DetectFacesResult testDetectFacesRequest(MultipartFile multipartFile) throws IOException {
         DetectFacesRequest request = new DetectFacesRequest()
@@ -77,4 +81,14 @@ public class HumanRekognitionService {
         return humanRekognition;
     }
 
+    public HumanRekognitionResult getHumanRekognitionResultByOrder(Long orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        Order order1 = order.get();
+        HumanRekognitionResult result = humanRekognitionRepository.getHumanRekognitionResultByOrder(order1);
+        return result;
+    }
+
+    public void deleteHumanRekognitionResult(HumanRekognitionResult humanRekognitionResult) {
+        humanRekognitionRepository.delete(humanRekognitionResult);
+    }
 }
