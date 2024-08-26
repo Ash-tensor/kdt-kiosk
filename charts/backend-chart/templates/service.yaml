@@ -1,0 +1,13 @@
+apiVersion: v1  # Kubernetes API 버전
+kind: Service  # 리소스의 종류
+metadata:
+  name: {{ .Release.Name }}-backend  # 릴리스 이름을 접두사로 사용한 Service 이름
+  labels:
+    app: {{ .Chart.Name }}  # Chart 이름을 사용한 레이블
+spec:
+  type: {{ .Values.service.type }}  # values.yaml에서 설정된 서비스 타입
+  ports:
+    - port: {{ .Values.service.port }}  # 외부 노출 포트
+      targetPort: 8080  # 컨테이너 포트
+  selector:
+    app: {{ .Chart.Name }}  # 트래픽을 전달할 Pod 선택

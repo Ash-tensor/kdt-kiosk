@@ -1,0 +1,32 @@
+apiVersion: apps/v1  # Kubernetes API 버전
+kind: Deployment  # 리소스의 종류
+metadata:
+  name: {{ .Release.Name }}-backend  # 릴리스 이름을 접두사로 사용한 Deployment 이름
+  labels:
+    app: {{ .Chart.Name }}  # Chart 이름을 사용한 레이블
+spec:
+  replicas: {{ .Values.replicaCount }}  # values.yaml에서 설정된 복제본 수
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}  # Pod을 선택할 레이블
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}  # Pod에 부착할 레이블
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}  # 컨테이너 이름
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  # 이미지 레포지토리 및 태그
+          ports:
+            - containerPort: 8080  # 컨테이너에서 노출할 포트
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS  # 환경 변수 설정
+              value: "/app/gcp-key.json"  # Google Cloud 자격 증명 파일의 경로
+          volumeMounts:
+            - name: gcp-key-volume
+              mountPath: /app/gcp-key.json  # 자격 증명 파일을 마운트할 위치
+              subPath: gcp-key.json  # 마운트할 파일 이름
+      volumes:
+        - name: gcp-key-volume
+          secret:
+            secretName: gcp-key-secret  # 시크릿에서 자격 증명 파일을 가져옴

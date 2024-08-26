@@ -1,0 +1,5 @@
+apiVersion: v2  # Helm Chart의 API 버전
+name: backend-chart  # Chart의 이름
+description: A Helm chart for Kubernetes to deploy the backend application  # 이 Chart에 대한 설명
+version: 0.1.0  # Chart의 버전
+appVersion: "1.0"  # 애플리케이션의 버전

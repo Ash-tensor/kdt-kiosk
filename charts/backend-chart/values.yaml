@@ -1,0 +1,10 @@
+replicaCount: 2  # Deployment에서 생성할 Pod 복제본 수
+
+image:
+  repository: kiosk-back/kiosk-back  # 사용할 Docker 이미지 레포지토리
+  tag: "1.0"  # 사용할 Docker 이미지 태그
+  pullPolicy: IfNotPresent  # 이미지가 존재하지 않을 때만 풀
+
+service:
+  type: LoadBalancer  # Service 타입, 로드밸런서를 통해 외부로 노출
+  port: 80  # Service가 외부에 노출할 포트
