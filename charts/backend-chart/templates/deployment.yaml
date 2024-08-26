@@ -1,32 +1,50 @@
-apiVersion: apps/v1  # Kubernetes API 버전
-kind: Deployment  # 리소스의 종류
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-backend  # 릴리스 이름을 접두사로 사용한 Deployment 이름
+  name: {{ .Release.Name }}-backend
   labels:
-    app: {{ .Chart.Name }}  # Chart 이름을 사용한 레이블
+    app: {{ .Chart.Name }}
 spec:
-  replicas: {{ .Values.replicaCount }}  # values.yaml에서 설정된 복제본 수
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}  # Pod을 선택할 레이블
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}  # Pod에 부착할 레이블
+        app: {{ .Chart.Name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}  # 컨테이너 이름
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  # 이미지 레포지토리 및 태그
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 8080  # 컨테이너에서 노출할 포트
+            - containerPort: 8080
           env:
-            - name: GOOGLE_APPLICATION_CREDENTIALS  # 환경 변수 설정
-              value: "/app/gcp-key.json"  # Google Cloud 자격 증명 파일의 경로
+            - name: DB_URL
+              value: {{ .Values.db.url }}
+            - name: DB_USERNAME
+              value: {{ .Values.db.username }}
+            - name: DB_PASSWORD
+              value: {{ .Values.db.password }}
+            - name: JWT_ISSUER
+              value: {{ .Values.jwt.issuer }}
+            - name: JWT_SECRET_KEY
+              value: {{ .Values.jwt.secretKey }}
+            - name: IAP_API_KEY
+              value: {{ .Values.iap.apiKey }}
+            - name: IAP_SECRET_KEY
+              value: {{ .Values.iap.secretKey }}
+            - name: AWS_ACCESS_KEY
+              value: {{ .Values.aws.accessKey }}
+            - name: AWS_SECRET_KEY
+              value: {{ .Values.aws.secretKey }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/teak-formula-414404-60aed70b9172.json"
           volumeMounts:
             - name: gcp-key-volume
-              mountPath: /app/gcp-key.json  # 자격 증명 파일을 마운트할 위치
-              subPath: gcp-key.json  # 마운트할 파일 이름
+              mountPath: /etc/teak-formula-414404-60aed70b9172.json
+              subPath: teak-formula-414404-60aed70b9172.json
       volumes:
         - name: gcp-key-volume
           secret:
-            secretName: gcp-key-secret  # 시크릿에서 자격 증명 파일을 가져옴
+            secretName: gcp-key-secret

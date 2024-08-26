@@ -21,14 +21,30 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_URL
-              value: "{{ .Values.db.url }}"
+              value: ${DB_URL}
             - name: DB_USERNAME
-              value: "{{ .Values.db.username }}"
+              value: ${DB_USERNAME}
             - name: DB_PASSWORD
-              value: "{{ .Values.db.password }}"
+              value: ${DB_PASSWORD}
+            - name: JWT_ISSUER
+              value: ${JWT_ISSUER}
             - name: JWT_SECRET_KEY
-              value: "{{ .Values.jwt.secretKey }}"
+              value: ${JWT_SECRET_KEY}
+            - name: IAP_API_KEY
+              value: ${IAP_API_KEY}
+            - name: IAP_SECRET_KEY
+              value: ${IAP_SECRET_KEY}
             - name: AWS_ACCESS_KEY
-              value: "{{ .Values.aws.accessKey }}"
+              value: ${AWS_ACCESS_KEY}
             - name: AWS_SECRET_KEY
-              value: "{{ .Values.aws.secretKey }}"
+              value: ${AWS_SECRET_KEY}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/teak-formula-414404-60aed70b9172.json"
+          volumeMounts:
+            - name: gcp-key-volume
+              mountPath: /etc/teak-formula-414404-60aed70b9172.json
+              subPath: teak-formula-414404-60aed70b9172.json
+      volumes:
+        - name: gcp-key-volume
+          secret:
+            secretName: gcp-key-secret
