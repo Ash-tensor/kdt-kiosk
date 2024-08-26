@@ -10,6 +10,7 @@ import ac.su.kiosk.service.RefundPaymentService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -54,7 +55,7 @@ public class RefundPaymentController {
             return ResponseEntity.ok("삭제됨");
         }
         else {
-            return ResponseEntity.ok("안됨");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
