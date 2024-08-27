@@ -1,0 +1,32 @@
+apiVersion: apps/v1  # Kubernetes API 버전, Deployment를 생성할 때 사용
+kind: Deployment  # 리소스의 종류, 여기서는 Deployment를 정의
+metadata:
+  name: backend-deployment  # Deployment의 이름, Kubernetes 내에서 이 이름으로 식별
+  labels:
+    app: kiosk-backend  # 이 리소스에 붙일 레이블, 앱을 구분하는 데 사용
+spec:
+  replicas: 2  # 몇 개의 Pod을 생성할지 정의, 여기서는 2개의 복제본 생성
+  selector:
+    matchLabels:
+      app: kiosk-backend  # 이 레이블을 가진 Pod을 관리
+  template:
+    metadata:
+      labels:
+        app: kiosk-backend  # Pod에 부착할 레이블
+    spec:
+      containers:
+        - name: kiosk-backend  # 컨테이너 이름
+          image: my-docker-repo/kiosk-back:1.0  # 사용할 Docker 이미지 및 태그
+          ports:
+            - containerPort: 8080  # 컨테이너 내부에서 애플리케이션이 사용할 포트
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS  # 환경 변수 설정
+              value: "/app/gcp-key.json"  # Google Cloud 자격 증명 파일의 경로
+          volumeMounts:
+            - name: gcp-key-volume
+              mountPath: /app/gcp-key.json  # 자격 증명 파일을 마운트할 위치
+              subPath: gcp-key.json  # 마운트할 파일 이름
+      volumes:
+        - name: gcp-key-volume
+          secret:
+            secretName: gcp-key-secret  # 시크릿에서 자격 증명 파일을 가져옴

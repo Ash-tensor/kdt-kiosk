@@ -19,7 +19,4 @@ public class HumanRekognitionResult {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "OrderId")
     private Order order;
-
-
-
 }

@@ -4,6 +4,7 @@ import ac.su.kiosk.constant.PaymentStatus;
 import ac.su.kiosk.domain.*;
 import ac.su.kiosk.dto.IAMPortDTO;
 import ac.su.kiosk.dto.OrderDTO;
+import ac.su.kiosk.dto.OrderStatisticDTO;
 import ac.su.kiosk.jwt.AccessTokenDTO;
 import ac.su.kiosk.jwt.JwtProvider;
 import ac.su.kiosk.logDto.OrderRequest;
@@ -13,6 +14,7 @@ import ac.su.kiosk.repository.OrderModuleDTORepository;
 import ac.su.kiosk.repository.OrderRepository;
 import ac.su.kiosk.service.OrderCompleteService;
 import ac.su.kiosk.service.OrderService;
+import ac.su.kiosk.service.OrderStatisticService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -35,7 +38,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final JwtProvider jwtProvider;
 
-
+    private final OrderStatisticService orderStatisticService;
     private final OrderCompleteService orderCompleteService;
 
 
@@ -96,5 +99,10 @@ public class OrderController {
     @PostMapping("/createOrderRequest")
     public void createOrderRequest(@RequestBody OrderRequest orderRequest) {
         orderService.convertToOrderModuleDTO(orderRequest);
+    }
+
+    @GetMapping("/orderStatistic/all")
+    public List<OrderStatisticDTO> getOrderStatistic() {
+        return orderStatisticService.convertToDTO(orderRepository.getOrderStatistic());
     }
 }

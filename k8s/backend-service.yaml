@@ -1,0 +1,13 @@
+apiVersion: v1  # Kubernetes API 버전, Service를 생성할 때 사용
+kind: Service  # 리소스의 종류, 여기서는 Service를 정의
+metadata:
+  name: backend-service  # Service의 이름, Kubernetes 내에서 이 이름으로 식별
+  labels:
+    app: kiosk-backend  # 이 리소스에 붙일 레이블, 앱을 구분하는 데 사용
+spec:
+  type: LoadBalancer  # Service 타입, 외부 트래픽을 처리할 로드밸런서를 생성
+  selector:
+    app: kiosk-backend  # 이 레이블을 가진 Pod으로 트래픽을 전달
+  ports:
+    - port: 80  # Service가 외부에 노출할 포트, 클라이언트는 이 포트로 접근
+      targetPort: 8080  # Pod 내 컨테이너가 수신할 포트, 컨테이너의 포트

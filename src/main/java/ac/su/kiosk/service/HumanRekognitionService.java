@@ -91,4 +91,9 @@ public class HumanRekognitionService {
     public void deleteHumanRekognitionResult(HumanRekognitionResult humanRekognitionResult) {
         humanRekognitionRepository.delete(humanRekognitionResult);
     }
+
+    public List<HumanRekognitionResult> getAllHumanRekognitionResult() {
+        return humanRekognitionRepository.findAll();
+    }
+
 }
