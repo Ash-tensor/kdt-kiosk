@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity  // URL 요청에 대한 Spring Security 동작 활성화
@@ -50,20 +51,21 @@ public class SecurityConfig {
         http
                 .httpBasic(AbstractHttpConfigurer::disable) // Deprecated됨
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화
+                // JWT는 세션 사용 안함
+                .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // React는 Form이 아니기 때문에 사용 안함
+                .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(  // 요청 인가 여부 결정을 위한 조건 판단
                         authorizeHttpRequests -> authorizeHttpRequests
-                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/**").permitAll() // 모든 요청이 허용됨
                                 .requestMatchers("/api/kk/kiosk/**").permitAll()
 //                                .requestMatchers("/admin/category/**").authenticated()
 //                                .requestMatchers("/admin/menu/**").authenticated()
 //                                .requestMatchers("/admin/payment/**").authenticated()
 //                                .anyRequest().authenticated()
                 )
-                // JWT 세션 사용 안함
-                .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // React는 Form이 아니기 때문에 사용 안함
-                .formLogin(AbstractHttpConfigurer::disable);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

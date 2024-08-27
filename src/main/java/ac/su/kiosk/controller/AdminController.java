@@ -2,11 +2,13 @@ package ac.su.kiosk.controller;
 
 import ac.su.kiosk.domain.Admin;
 import ac.su.kiosk.domain.OrderModuleDTO;
+import ac.su.kiosk.domain.RefreshToken;
 import ac.su.kiosk.domain.User;
 import ac.su.kiosk.dto.AdminLoginForm;
 import ac.su.kiosk.dto.LoginResponse;
 import ac.su.kiosk.jwt.AccessTokenDTO;
 import ac.su.kiosk.jwt.JwtProvider;
+import ac.su.kiosk.repository.RefreshTokenRepository;
 import ac.su.kiosk.service.AdminService;
 import ac.su.kiosk.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class AdminController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
 /*    @PostMapping("/login")
@@ -51,11 +54,17 @@ public class AdminController {
         if (foundOptUser.isPresent()) {
             User foundUser = foundOptUser.get();
             if (passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {
+                // AccessToken
                 String accessToken = jwtProvider.generateToken(foundUser, Duration.ofHours(1L));
                 String tokenType = "Bearer";
                 AccessTokenDTO accessTokenDTO = new AccessTokenDTO(accessToken, tokenType);
+
+                // RefreshToken
+                String refreshToken = jwtProvider.generateToken(foundUser, Duration.ofHours(3L));
+                refreshTokenRepository.save(new RefreshToken(refreshToken));
+
                 // React에 전달 할 때 토큰의 값만 전송
-                LoginResponse response = new LoginResponse(accessTokenDTO.getAccessToken(), foundUser.getId());
+                LoginResponse response = new LoginResponse(accessTokenDTO.getAccessToken(), refreshToken, foundUser.getId());
                 return ResponseEntity.ok(response);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
@@ -64,6 +73,7 @@ public class AdminController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
 
     @PostMapping("/sign_up")
     public ResponseEntity<String> signUpNewAdmin(@RequestBody Admin request) {

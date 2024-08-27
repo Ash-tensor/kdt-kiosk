@@ -17,7 +17,7 @@ public class RefundPaymentService {
 
     // 모든 결제 내역 가져오기
     public List<OrderRefundDTO> getAllOrders(){
-        List<Order> orders = orderRepository.findAll();
+        List<Order> orders = orderRepository.findAllOrder();
         List<OrderRefundDTO> orderRefundDTOs = new ArrayList<>();
         for (Order order : orders) {
             orderRefundDTOs.add(OrderRefundDTO.fromOrder(order));
