@@ -9,10 +9,9 @@ import ac.su.kiosk.repository.OrderCompleteRepository;
 import ac.su.kiosk.repository.OrderItemRepository;
 import ac.su.kiosk.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -71,7 +70,7 @@ public class OrderCompleteController {
         List<OrderCompleteDTO> orderCompleteDTOList = new ArrayList<>();
 
         List<Order> targetOrderList = new ArrayList<>();
-        for(OrderComplete orderComplete : orderCompleteList) {
+        for (OrderComplete orderComplete : orderCompleteList) {
 //            targetOrderList.add(orderRepository.findById(orderComplete.getOrder().getId()).get());
             targetOrderList.add(orderComplete.getOrder());
         }
@@ -80,8 +79,10 @@ public class OrderCompleteController {
         Map<Order, List<OrderItem>> orderItemMap = targetOrderItem.stream().collect(Collectors.groupingBy(OrderItem::getOrder));
         Set<Order> orderItemKeyset = orderItemMap.keySet();
 
-        for(Order x : new ArrayList<>(orderItemKeyset)) {
+        for (Order x : new ArrayList<>(orderItemKeyset)) {
             OrderCompleteDTO orderCompleteDTO = new OrderCompleteDTO();
+            orderCompleteDTO.setOrderId(x.getId());
+
             List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
             for (OrderItem orderItem : orderItemMap.get(x)) {
                 OrderItemDTO orderItemDTO = new OrderItemDTO();
@@ -97,5 +98,18 @@ public class OrderCompleteController {
             orderCompleteDTOList.add(orderCompleteDTO);
         }
         return orderCompleteDTOList;
+    }
+
+    @PostMapping
+    public ResponseEntity<String> completeOrder(@RequestBody Map<String, Long> request) {
+        Long id = request.get("orderId"); // orderId가 들어옴.
+        List<OrderComplete> targetOC = orderCompleteRepository.findAllByOrderId(id);
+        for (OrderComplete x : orderCompleteRepository.findAllByOrderId(id)) {
+            x.setComplete(true);
+            orderCompleteRepository.save(x);
+        }
+
+        orderCompleteRepository.updateTrueById(id);
+        return ResponseEntity.ok("주문 완료 처리 완료");
     }
 }
