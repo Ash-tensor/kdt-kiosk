@@ -16,7 +16,7 @@ public interface OrderCompleteRepository extends JpaRepository<OrderComplete, Lo
     @Transactional
     @Modifying
     @Query("update OrderComplete oc set oc.complete = true where oc.id = :id")
-    void updateById(Long id);
+    void updateTrueById(Long id);
 
     @Query("select " +
             "oc from OrderComplete oc " +

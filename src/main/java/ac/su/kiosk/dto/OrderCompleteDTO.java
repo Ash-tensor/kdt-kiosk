@@ -1,5 +1,6 @@
 package ac.su.kiosk.dto;
 
+import ac.su.kiosk.domain.Order;
 import ac.su.kiosk.domain.OrderItem;
 import lombok.Data;
 import lombok.Getter;
@@ -15,4 +16,5 @@ public class OrderCompleteDTO {
     private List<OrderItemDTO> orderItemList;
     private LocalDateTime datetime;
     private Boolean complete;
+    private Long orderId;
 }

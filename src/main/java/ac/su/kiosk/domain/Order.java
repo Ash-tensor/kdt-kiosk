@@ -41,11 +41,4 @@ public class Order {
     @JoinColumn(name = "order_module_dto")
     private OrderModuleDTO orderModuleDTO;
 
-//    @Column(nullable = false)
-//    private String orderUid;
-    //    @Column
-//    private String orderUid; // 결제모듈의 orderUid와 매핑됨
-
-    //@Column
-    //private String itemName; // 결제모듈의 itemName과 매핑됨
 }
