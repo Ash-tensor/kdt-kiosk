@@ -1,6 +1,7 @@
 package ac.su.kiosk.repository;
 
 import ac.su.kiosk.domain.Order;
+import ac.su.kiosk.dto.OrderRefundDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,6 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Optional<Order> findByPaymentUid(String paymentUid);
 
-    @Query("SELECT o FROM Order o JOIN FETCH o.customer JOIN FETCH o.kiosk")
+    @Query("SELECT o " +
+            "FROM Order o JOIN FETCH o.customer JOIN FETCH o.kiosk JOIN FETCH o.orderModuleDTO")
     List<Order> findAllOrder();
 }
