@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_URL
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET_KEY
+            - name: IAP_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: iap-secret
+                  key: IAP_API_KEY
+            - name: IAP_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: iap-secret
+                  key: IAP_SECRET_KEY
+            - name: GCP_PROJECT_ID
+              value: {{ .Values.env.GCP_PROJECT_ID }}
+            - name: GCP_STORAGE_BUCKET_NAME
+              value: {{ .Values.env.GCP_STORAGE_BUCKET_NAME }}
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: AWS_ACCESS_KEY
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: AWS_SECRET_KEY
+          volumeMounts:
+            - name: gcp-key-volume
+              mountPath: /app/gcp-key.json
+              subPath: gcp-key.json
+      volumes:
+        - name: gcp-key-volume
+          secret:
+            secretName: gcp-key-secret
