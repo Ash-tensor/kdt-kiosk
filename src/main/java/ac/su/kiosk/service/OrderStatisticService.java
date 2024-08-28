@@ -1,6 +1,7 @@
 package ac.su.kiosk.service;
 
 import ac.su.kiosk.dto.OrderStatisticDTO;
+import ac.su.kiosk.repository.OrderItemRepository;
 import ac.su.kiosk.repository.OrderRepository;
 import jakarta.persistence.Tuple;
 import lombok.Getter;
@@ -18,19 +19,10 @@ import java.util.stream.Collectors;
 public class OrderStatisticService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    public List<OrderStatisticDTO> convertToDTO(List<Tuple> tuples) {
-        return tuples.stream()
-                .map(tuple -> new OrderStatisticDTO(
-                        tuple.get(0, Long.class),
-                        tuple.get(1, Long.class),
-                        tuple.get(2, Long.class),
-                        tuple.get(3, Boolean.class),
-                        tuple.get(4, Long.class),
-                        tuple.get(5, Long.class),
-                        tuple.get(6, BigDecimal.class),
-                        tuple.get(7, String.class)
-                ))
-                .collect(Collectors.toList());
+    public List<OrderStatisticDTO> getOrderItemsWithHumanRekognition() {
+        return orderItemRepository.fetchOrderItemsWithHumanRekognition();
+
     }
 }

@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-rekognition:1.12.770'
     implementation 'com.amazonaws:aws-java-sdk-core:1.12.770'
 
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.3.1'
 
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
 

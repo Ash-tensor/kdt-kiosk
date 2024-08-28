@@ -101,8 +101,8 @@ public class OrderController {
         orderService.convertToOrderModuleDTO(orderRequest);
     }
 
-    @GetMapping("/orderStatistic/all")
-    public List<OrderStatisticDTO> getOrderStatistic() {
-        return orderStatisticService.convertToDTO(orderRepository.getOrderStatistic());
+    @GetMapping("/humanrekognition")
+    public List<OrderStatisticDTO> getOrderItemsWithHumanRekognition() {
+        return orderStatisticService.getOrderItemsWithHumanRekognition();
     }
 }
