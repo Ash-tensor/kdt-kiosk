@@ -7,6 +7,8 @@ import ac.su.kiosk.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class StoreService {
@@ -27,5 +29,9 @@ public class StoreService {
         store.setAdmin(admin);
         storeRepository.save(store);
         return store;
+    }
+
+    public List<Store> findAllStores() {
+        return storeRepository.findAll();
     }
 }

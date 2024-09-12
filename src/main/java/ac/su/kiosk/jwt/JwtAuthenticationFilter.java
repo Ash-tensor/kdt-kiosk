@@ -39,14 +39,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        // 수신한 request 에서 토큰 추출
-        String token = getAccessToken(request);
-        if (token != null && jwtProvider.validateToken(token)) {
-            // 토큰의 유효성 판단 후
-            Authentication authentication = jwtProvider.getAuthentication(token);
-            // 토큰 소유자 권한에 따라 요청 맥락에 권한 부여
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        String path = request.getRequestURI();
+        // Admin 관련 경로만 JWT 필터를 적용
+        if (path.startsWith("/api/kk/kiosk/")) {
+            String token = getAccessToken(request);
+            if (token != null && jwtProvider.validateToken(token)) {
+                Authentication authentication = jwtProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(request, response);
     }
+
 }

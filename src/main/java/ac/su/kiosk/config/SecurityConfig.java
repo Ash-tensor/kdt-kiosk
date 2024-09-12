@@ -60,6 +60,7 @@ public class SecurityConfig {
                         authorizeHttpRequests -> authorizeHttpRequests
                                 .requestMatchers("/**").permitAll() // 모든 요청이 허용됨
                                 .requestMatchers("/api/kk/kiosk/**").permitAll()
+                                .requestMatchers("/api/kk/siren/user/**").permitAll()
 //                                .requestMatchers("/admin/category/**").authenticated()
 //                                .requestMatchers("/admin/menu/**").authenticated()
 //                                .requestMatchers("/admin/payment/**").authenticated()
