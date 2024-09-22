@@ -91,10 +91,29 @@ public class AdminController {
         newAdmin.setPassword(request.getPassword()); // 비밀번호 암호화
         newAdmin.setEmail(request.getEmail());
         Admin admin = adminService.saveAdmin(newAdmin);
-        userService.saveAdminUser(admin);
 
+        userService.saveAdminUser(admin);
 
         return new ResponseEntity<>("Admin registered successfully", HttpStatus.CREATED);
     }
 
+    @PostMapping("/sign_up2")
+    public ResponseEntity<String> signUpNewUser(@RequestBody User request) {
+        Optional<User> existingUserByName = userService.findByName(request.getName());
+        if (existingUserByName.isPresent()) {
+            return new ResponseEntity<>("Name already taken", HttpStatus.CONFLICT);
+        }
+
+        User newUser = new User();
+        newUser.setName(request.getName());
+        newUser.setPassword(request.getPassword()); // 비밀번호 암호화
+        newUser.setRole(request.getRole());
+        newUser.setAdmin(request.getAdmin());
+        newUser.setKiosk(request.getKiosk());
+        newUser.setStore(request.getStore());
+        User user = userService.saveUser(newUser);
+        userService.saveRegisterUser(user);
+
+        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+    }
 }

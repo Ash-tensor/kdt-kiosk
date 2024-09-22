@@ -7,6 +7,7 @@ import ac.su.kiosk.domain.User;
 import ac.su.kiosk.jwt.AccessTokenDTO;
 import ac.su.kiosk.jwt.JwtProvider;
 import ac.su.kiosk.jwt.SpringUser;
+import ac.su.kiosk.repository.RegisterRepository;
 import ac.su.kiosk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,22 @@ public class UserService implements UserDetailsService {
         user.setPassword(admin.getPassword());
         user.setRole(Role.ADMIN);
         userRepository.save(user);
+    }
+
+    public void saveRegisterUser(User request) {    // 회원가입 시 저장하기 위한 메서드
+        User user = new User();
+        user.setAdmin(request.getAdmin());
+        user.setKiosk(request.getKiosk());
+        user.setStore(request.getStore());
+        user.setName(request.getName());
+        user.setPassword(request.getPassword());
+        user.setRole(request.getRole());
+        userRepository.save(user);
+    }
+
+    public User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     public void saveCustomerUser(Customer customer) {
