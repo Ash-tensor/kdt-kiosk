@@ -74,4 +74,14 @@ public class CustomerController {
             return ResponseEntity.status(400).body("불충분한 포인트");
         }
     }
+
+    @PostMapping("/sign_up")
+    public ResponseEntity<String> signUpNewCustomer(@RequestBody Customer request) {
+        if (customerService.getCustomerByPhone(request.getPhoneNumber()).isPresent()) {
+            return new ResponseEntity<>("Phone number already taken", HttpStatus.CONFLICT);
+        }
+
+        customerService.saveCustomer(request);
+        return new ResponseEntity<>("Customer registered successfully", HttpStatus.CREATED);
+    }
 }

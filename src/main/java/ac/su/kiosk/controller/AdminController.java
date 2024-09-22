@@ -74,7 +74,6 @@ public class AdminController {
         }
     }
 
-
     @PostMapping("/sign_up")
     public ResponseEntity<String> signUpNewAdmin(@RequestBody Admin request) {
         Optional<Admin> existingAdminByName = adminService.findAdminByName(request.getName());
