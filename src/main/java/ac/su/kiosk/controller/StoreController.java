@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/kk/store")
@@ -17,5 +19,10 @@ public class StoreController {
     public ResponseEntity<Store> getStoreByAdminId(@PathVariable int adminId) {
         Store store = storeService.findStoreByAdminId(adminId);
         return ResponseEntity.ok(store);
+    }
+
+    @GetMapping("/all")
+    public List<Store> getAllStores() {
+        return storeService.findAllStores();
     }
 }
