@@ -56,6 +56,25 @@ public class HumanRekognitionService {
 //        return humanRekognition;
 //    }
 
+    public int detectFacesRequest(MultipartFile image) throws IOException {
+        DetectFacesRequest request = new DetectFacesRequest()
+                .withImage(new Image().withBytes(ByteBuffer.wrap(image.getBytes())))
+                .withAttributes(Attribute.ALL);
+
+        DetectFacesResult detectFacesResult = client.detectFaces(request);
+        List<FaceDetail> faceDetails = detectFacesResult.getFaceDetails();
+
+        HumanRekognitionResult humanRekognition = new HumanRekognitionResult();
+
+        FaceDetail targetFaceDetail = faceDetails.get(0);
+        AgeRange ageRange = targetFaceDetail.getAgeRange();
+        int high = ageRange.getHigh();
+        int low = ageRange.getLow();
+        int mean = (high + low) / 2;
+
+        return mean;
+    }
+
     public HumanRekognitionResult detectFacesRequest(MultipartFile multipartFile, Order order) throws IOException {
         DetectFacesRequest request = new DetectFacesRequest()
                 .withImage(new Image().withBytes(ByteBuffer.wrap(multipartFile.getBytes())))
@@ -95,5 +114,6 @@ public class HumanRekognitionService {
     public List<HumanRekognitionResult> getAllHumanRekognitionResult() {
         return humanRekognitionRepository.findAll();
     }
+
 
 }
