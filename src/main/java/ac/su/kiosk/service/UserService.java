@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         user.setAdmin(admin);
         user.setName(admin.getName());  // Admin은 name으로 로그인
         user.setPassword(admin.getPassword());
-        user.setRole(Role.ADMIN);
+//        user.setRole(Role.ADMIN);
         userRepository.save(user);
     }
 

@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface KioskRepository extends JpaRepository<Kiosk, Integer> {
     List<Kiosk> findByStore(Store store);
+    Optional<Kiosk> findByNumber(String number);
 }

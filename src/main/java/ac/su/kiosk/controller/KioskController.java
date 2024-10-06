@@ -25,4 +25,14 @@ public class KioskController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    @GetMapping("/{adminId}/{storeId}/kiosks")
+    public ResponseEntity<List<Kiosk>> getKiosksByAdminIdAndStoreId(@PathVariable int adminId, @PathVariable int storeId) {
+        try {
+            List<Kiosk> kiosks = kioskService.findKiosksByAdminIdAndStoreId(adminId, storeId);
+            return ResponseEntity.ok(kiosks);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 }

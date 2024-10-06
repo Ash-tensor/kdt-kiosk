@@ -1,14 +1,15 @@
 package ac.su.kiosk.controller;
 
-import ac.su.kiosk.domain.Admin;
-import ac.su.kiosk.domain.OrderModuleDTO;
-import ac.su.kiosk.domain.RefreshToken;
-import ac.su.kiosk.domain.User;
+import ac.su.kiosk.constant.Role;
+import ac.su.kiosk.domain.*;
 import ac.su.kiosk.dto.AdminLoginForm;
 import ac.su.kiosk.dto.LoginResponse;
+import ac.su.kiosk.dto.SignUpRequest;
 import ac.su.kiosk.jwt.AccessTokenDTO;
 import ac.su.kiosk.jwt.JwtProvider;
+import ac.su.kiosk.repository.KioskRepository;
 import ac.su.kiosk.repository.RefreshTokenRepository;
+import ac.su.kiosk.repository.StoreRepository;
 import ac.su.kiosk.service.AdminService;
 import ac.su.kiosk.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,8 @@ public class AdminController {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final StoreRepository storeRepository;
+    private final KioskRepository kioskRepository;
 
 
 /*    @PostMapping("/login")
@@ -98,21 +101,47 @@ public class AdminController {
     }
 
     @PostMapping("/sign_up2")
-    public ResponseEntity<String> signUpNewUser(@RequestBody User request) {
+    public ResponseEntity<String> signUpNewUser(@RequestBody SignUpRequest request) {
+        // 사용자 이름 중복 체크
         Optional<User> existingUserByName = userService.findByName(request.getName());
         if (existingUserByName.isPresent()) {
             return new ResponseEntity<>("Name already taken", HttpStatus.CONFLICT);
         }
 
+        // 새로운 Admin 생성(SignUp 재사용)
+        Admin newAdmin = new Admin();
+        newAdmin.setName(request.getName());
+        newAdmin.setPassword(request.getPassword());
+        newAdmin.setEmail(request.getEmail());
+        Admin savedAdmin = adminService.saveAdmin(newAdmin); // Admin 저장
+
+        // 새로운 스토어 생성
+        Store store = new Store();
+        store.setName(request.getStoreName());
+        store.setLocation(request.getStoreLocation());
+        store.setAdmin(savedAdmin); // 새로 저장한 Admin 할당
+
+        // 새로운 키오스크 생성
+        Kiosk kiosk = new Kiosk();
+        kiosk.setStore(store);
+        kiosk.setNumber(request.getKioskNumber());
+
+        // 새로운 사용자 생성
         User newUser = new User();
         newUser.setName(request.getName());
-        newUser.setPassword(request.getPassword()); // 비밀번호 암호화
-        newUser.setRole(request.getRole());
-        newUser.setAdmin(request.getAdmin());
-        newUser.setKiosk(request.getKiosk());
-        newUser.setStore(request.getStore());
-        User user = userService.saveUser(newUser);
-        userService.saveRegisterUser(user);
+        newUser.setStore(store);
+        newUser.setKiosk(kiosk);
+        newUser.setRole(request.getRole()); // 0 또는 1 값(Constants 참조)
+        newUser.setAdmin(savedAdmin);
+
+        // 비밀번호 인코딩
+        newUser.setPassword(passwordEncoder.encode(request.getPassword())); // 비밀번호 인코딩 후 저장
+        // Admin 과 User 의 비밀번호 인코딩 값 다르게 저장됨...
+
+        // 데이터베이스에 저장
+        storeRepository.save(store);
+        kioskRepository.save(kiosk);
+        userService.saveRegisterUser(newUser);
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }

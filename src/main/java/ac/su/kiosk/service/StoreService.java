@@ -7,6 +7,8 @@ import ac.su.kiosk.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class StoreService {
@@ -18,6 +20,10 @@ public class StoreService {
                 .orElseThrow(() -> new IllegalArgumentException("No admin found with id: " + adminId));
         return storeRepository.findByAdmin(admin)
                 .orElseThrow(() -> new IllegalArgumentException("No store found for adminId: " + adminId));
+    }
+
+    public List<Store> findStoresByAdminId(int adminId) {
+        return storeRepository.findAllByAdminId(adminId); // adminId로 모든 스토어 반환
     }
 
     public Store store(String name, String location, Admin admin) {

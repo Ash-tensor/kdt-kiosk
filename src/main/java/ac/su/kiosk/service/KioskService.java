@@ -45,4 +45,19 @@ public class KioskService {
         kiosk.setNumber(kioskNumber); // 이거 일련번호인듯 아마
         return kiosk;
     }
+
+    public List<Kiosk> findKiosksByAdminIdAndStoreId(int adminId, int storeId) {
+        Admin admin = adminRepository.findById(adminId)
+                .orElseThrow(() -> new IllegalArgumentException("No admin found with id: " + adminId));
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("No store found with id: " + storeId));
+
+        if (!store.getAdmin().equals(admin)) {
+            throw new IllegalArgumentException("Store does not belong to the given admin.");
+        }
+
+        return kioskRepository.findByStore(store);
+    }
+
 }
