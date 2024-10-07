@@ -7,7 +7,6 @@ import ac.su.kiosk.domain.User;
 import ac.su.kiosk.jwt.AccessTokenDTO;
 import ac.su.kiosk.jwt.JwtProvider;
 import ac.su.kiosk.jwt.SpringUser;
-import ac.su.kiosk.repository.RegisterRepository;
 import ac.su.kiosk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
