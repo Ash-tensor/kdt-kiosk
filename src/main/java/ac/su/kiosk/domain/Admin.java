@@ -19,6 +19,5 @@ public class Admin {
     private String password;
 
     @Column
-    private String email; // 결제모듈 추가로 인해 추가됨
-
+    private String email; // 결제모듈 추가로 인해 추가
 }

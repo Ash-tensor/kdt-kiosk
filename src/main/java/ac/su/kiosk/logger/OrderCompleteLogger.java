@@ -14,20 +14,18 @@ public class OrderCompleteLogger {
             String method,          // HTTP METHODS
             String storeId,         // 매장 ID
             String kioskId,         // 키오스크 ID
-            String transactionId,   // 요청 고유값
             String productId,       // 주문한 상품 ID
             String orderId,         // 주문 번호
             String payload,         //
             boolean isVoiceOrder    // 음성 주문 여부
     ) {
-        logger.info(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
+        logger.info(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
                 logType,
                 logTime,
                 url,
                 method,
                 storeId != null ? storeId : "-",
                 kioskId != null ? kioskId : "-",
-                transactionId,
                 productId,
                 orderId,
                 payload,

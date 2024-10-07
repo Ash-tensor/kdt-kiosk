@@ -22,6 +22,10 @@ public class StoreService {
                 .orElseThrow(() -> new IllegalArgumentException("No store found for adminId: " + adminId));
     }
 
+    public List<Store> findStoresByAdminId(int adminId) {
+        return storeRepository.findAllByAdminId(adminId); // adminId로 모든 스토어 반환
+    }
+
     public Store store(String name, String location, Admin admin) {
         Store store = new Store();
         store.setName(name);

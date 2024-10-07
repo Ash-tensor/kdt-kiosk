@@ -39,5 +39,4 @@ public class AdminService {
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
-
 }

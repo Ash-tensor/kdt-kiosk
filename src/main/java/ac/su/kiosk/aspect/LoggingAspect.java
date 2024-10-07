@@ -19,8 +19,6 @@ public class LoggingAspect {
     public void logAfterOrderCompletion(JoinPoint joinPoint, Object result) {
         OrderRequest orderRequest = (OrderRequest) joinPoint.getArgs()[0];  // DTO 추출
 
-//        String existingUuid = orderRequest.getUuid();
-
         OrderCompleteLogger.logOrder(
                 "ORDER_COMPLETE",
                 LocalDateTime.now().toString(),
@@ -28,11 +26,10 @@ public class LoggingAspect {
                 "POST",
                 orderRequest.getStoreId(),
                 orderRequest.getKioskId(),
-                "-",
                 orderRequest.getProductId(),
                 orderRequest.getOrderId(),
                 orderRequest.getPayload(),
-                false // 예시로 음성 주문이 아닌 경우
+                false
         );
     }
 

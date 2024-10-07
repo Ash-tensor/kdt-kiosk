@@ -32,8 +32,24 @@ public class UserService implements UserDetailsService {
         user.setAdmin(admin);
         user.setName(admin.getName());  // Admin은 name으로 로그인
         user.setPassword(admin.getPassword());
-        user.setRole(Role.ADMIN);
+//        user.setRole(Role.ADMIN);
         userRepository.save(user);
+    }
+
+    public void saveRegisterUser(User request) {    // 회원가입 시 저장하기 위한 메서드
+        User user = new User();
+        user.setAdmin(request.getAdmin());
+        user.setKiosk(request.getKiosk());
+        user.setStore(request.getStore());
+        user.setName(request.getName());
+        user.setPassword(request.getPassword());
+        user.setRole(request.getRole());
+        userRepository.save(user);
+    }
+
+    public User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     public void saveCustomerUser(Customer customer) {

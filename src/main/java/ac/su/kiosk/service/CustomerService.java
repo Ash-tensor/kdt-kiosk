@@ -78,6 +78,10 @@ public class CustomerService {
         }
     }
 
+    public void saveCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
 //    // 고객이 존재하지 않으면 새로운 고객을 생성하는 메서드
 //    public Customer getOrCreateCustomer(String phoneNumber) {
 //        return getCustomerByPhone(phoneNumber).orElseGet(() -> createCustomer(phoneNumber, "1111"));
