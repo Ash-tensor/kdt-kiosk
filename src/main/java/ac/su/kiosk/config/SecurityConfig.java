@@ -2,6 +2,7 @@ package ac.su.kiosk.config;
 
 import ac.su.kiosk.jwt.JwtAuthenticationFilter;
 import ac.su.kiosk.jwt.JwtProvider;
+import ac.su.kiosk.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtProvider jwtProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
     // 기존 SecurityFilter
 /*    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -66,7 +68,7 @@ public class SecurityConfig {
 //                                .requestMatchers("/admin/payment/**").authenticated()
 //                                .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, refreshTokenRepository), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -78,6 +80,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(jwtProvider);
+        return new JwtAuthenticationFilter(jwtProvider, refreshTokenRepository);
     }
 }

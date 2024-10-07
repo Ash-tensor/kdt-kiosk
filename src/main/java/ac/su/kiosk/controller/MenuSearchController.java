@@ -6,6 +6,7 @@ import ac.su.kiosk.domain.Menu;
 import ac.su.kiosk.domain.StoreMenuAvailability;
 import ac.su.kiosk.dto.CustomOptionDTO;
 import ac.su.kiosk.dto.CustomOptionRequest;
+import ac.su.kiosk.dto.MenuNameAndPriceDTO;
 import ac.su.kiosk.service.CategoryService;
 import ac.su.kiosk.service.CustomOptionService;
 import ac.su.kiosk.service.MenuService;
@@ -13,6 +14,7 @@ import ac.su.kiosk.service.StoreMenuAvailabilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +65,19 @@ public class MenuSearchController {
                 .filter(menu -> availabilityList.stream()
                         .anyMatch(availability -> availability.getMenu().getId() == menu.getId() && availability.isAvailable()))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/menuNameandPrice")
+    public List<MenuNameAndPriceDTO> getMenuNameAndPrice() {
+        List<MenuNameAndPriceDTO> menuDTOs = new ArrayList<>();
+        List<Menu> menus = menuService.getAll();
+        for (Menu menu : menus) {
+            MenuNameAndPriceDTO menuDTO = new MenuNameAndPriceDTO();
+            menuDTO.setName(menu.getName());
+            menuDTO.setPrice(menu.getPrice());
+            menuDTOs.add(menuDTO);
+        }
+        return menuDTOs;
     }
 
     // 특정 메뉴 ID에 대한 커스텀 옵션 가져오기

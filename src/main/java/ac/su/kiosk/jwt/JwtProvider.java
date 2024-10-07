@@ -1,5 +1,6 @@
 package ac.su.kiosk.jwt;
 
+import ac.su.kiosk.domain.Store;
 import ac.su.kiosk.domain.User;
 import ac.su.kiosk.repository.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -95,5 +96,16 @@ public class JwtProvider {
         Claims claims = getClaims(token);
         int userId = Integer.parseInt(claims.getSubject());
         return userRepository.findById(userId).get();
+    }
+
+    public Store getStore(String token) {
+        Claims claims = getClaims(token);
+        int userId = Integer.parseInt(claims.getSubject());
+        User user;
+        if (userRepository.findById(userId).isPresent()) {
+            user = userRepository.findById(userId).get();
+            return user.getStore();
+        }
+        return null;
     }
 }
