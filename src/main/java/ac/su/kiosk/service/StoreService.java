@@ -34,4 +34,8 @@ public class StoreService {
         storeRepository.save(store);
         return store;
     }
+
+    public List<Store> findAllStores() {
+        return storeRepository.findAll();
+    }
 }

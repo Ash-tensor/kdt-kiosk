@@ -27,4 +27,8 @@ public class StoreController {
         return ResponseEntity.ok(stores);
     }
 
+    @GetMapping("/all")
+    public List<Store> getAllStores() {
+        return storeService.findAllStores();
+    }
 }

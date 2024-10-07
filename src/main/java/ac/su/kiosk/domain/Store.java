@@ -22,6 +22,11 @@ public class Store {
     @JoinColumn(name = "adminID", nullable = false)
     private Admin admin;
 
+    @Column
+    private Double latitude;
+
+    @Column
+    private Double longitude;
 //    @OneToMany(mappedBy = "store")//일대다 관계
 //    private List<Kiosk> kiosks;
 }

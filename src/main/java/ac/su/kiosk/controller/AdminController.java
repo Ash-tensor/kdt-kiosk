@@ -79,25 +79,29 @@ public class AdminController {
 
     @PostMapping("/sign_up")
     public ResponseEntity<String> signUpNewAdmin(@RequestBody Admin request) {
-        Optional<Admin> existingAdminByName = adminService.findAdminByName(request.getName());
-        if (existingAdminByName.isPresent()) {
-            return new ResponseEntity<>("Name already taken", HttpStatus.CONFLICT);
+        try {
+            Optional<Admin> existingAdminByName = adminService.findAdminByName(request.getName());
+            if (existingAdminByName.isPresent()) {
+                return new ResponseEntity<>("Name already taken", HttpStatus.CONFLICT);
+            }
+
+            Optional<Admin> existingAdminByEmail = adminService.findAdminByEmail(request.getEmail());
+            if (existingAdminByEmail.isPresent()) {
+                return new ResponseEntity<>("Email already used", HttpStatus.CONFLICT);
+            }
+
+            Admin newAdmin = new Admin();
+            newAdmin.setName(request.getName());
+            newAdmin.setPassword(passwordEncoder.encode(request.getPassword())); // 비밀번호 암호화
+            newAdmin.setEmail(request.getEmail());
+            adminService.saveAdmin(newAdmin);
+
+            return new ResponseEntity<>("Admin registered successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            // 예외 발생 시 로그 출력
+            e.printStackTrace();
+            return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        Optional<Admin> existingAdminByEmail = adminService.findAdminByEmail(request.getEmail());
-        if (existingAdminByEmail.isPresent()) {
-            return new ResponseEntity<>("Email already used", HttpStatus.CONFLICT);
-        }
-
-        Admin newAdmin = new Admin();
-        newAdmin.setName(request.getName());
-        newAdmin.setPassword(request.getPassword()); // 비밀번호 암호화
-        newAdmin.setEmail(request.getEmail());
-        Admin admin = adminService.saveAdmin(newAdmin);
-
-        userService.saveAdminUser(admin);
-
-        return new ResponseEntity<>("Admin registered successfully", HttpStatus.CREATED);
     }
 
     @PostMapping("/sign_up2")
