@@ -16,6 +16,10 @@ public class StoreGuardImg {
     @Column(length = 2000)
     public String imgUrl;
 
+    @Column(length = 2000)
+    public String imgName;
+
+
     @ManyToOne//다대일 관계
     @JoinColumn(name = "storeID", nullable = false)//외래키 필드의 이름
     private Store store;
