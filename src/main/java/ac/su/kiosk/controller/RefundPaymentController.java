@@ -63,51 +63,50 @@ public class RefundPaymentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
-    public String getToken(){
-        try {
-            // HttpClient 생성
-            HttpClient client = HttpClient.newHttpClient();
-
-            // 요청 바디 작성
-            String jsonInputString = "{\"imp_key\": \""+iAmPortProperty.getApiKey()+"\", \"imp_secret\": \""+iAmPortProperty.getSecretKey()+"\"}";
-
-            // HttpRequest 생성
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.iamport.kr/users/getToken"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
-                    .build();
-
-            // 요청 보내고 응답 받기
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // 응답 코드 및 바디 출력
-            System.out.println("Response Code: " + response.statusCode());
-            System.out.println("Response Body: " + response.body());
-            JSONObject responseBody = new JSONObject(response.body());
-            JSONObject responseObject = responseBody.getJSONObject("response");
-            String accessToken = responseObject.getString("access_token");
-            System.out.println("Access Token: " + accessToken);
-            return accessToken;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    결제v1에 사용하던 토큰 받는 코드
+//    public String getToken(){
+//        try {
+//            // HttpClient 생성
+//            HttpClient client = HttpClient.newHttpClient();
+//
+//            // 요청 바디 작성
+//            String jsonInputString = "{\"imp_key\": \""+iAmPortProperty.getApiKey()+"\", \"imp_secret\": \""+iAmPortProperty.getSecretKey()+"\"}";
+//
+//            // HttpRequest 생성
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(new URI("https://api.iamport.kr/users/getToken"))
+//                    .header("Content-Type", "application/json")
+//                    .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
+//                    .build();
+//
+//            // 요청 보내고 응답 받기
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//            // 응답 코드 및 바디 출력
+//            System.out.println("Response Code: " + response.statusCode());
+//            System.out.println("Response Body: " + response.body());
+//            JSONObject responseBody = new JSONObject(response.body());
+//            JSONObject responseObject = responseBody.getJSONObject("response");
+//            String accessToken = responseObject.getString("access_token");
+//            System.out.println("Access Token: " + accessToken);
+//            return accessToken;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     public boolean refund(String refundCode){
-        String token = getToken();
         try {
             // HttpClient 생성
             HttpClient client = HttpClient.newHttpClient();
 
             // 요청 바디 작성
-            String jsonInputString = "{\"imp_uid\": \"" + refundCode + "\"}";
+            String jsonInputString = "{\"reason\": \"reason\"}";
 
             // HttpRequest 생성
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.iamport.kr/payments/cancel?_token="+token))
+                    .uri(new URI("https://api.portone.io/payments/"+refundCode+"/cancel"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
                     .build();
