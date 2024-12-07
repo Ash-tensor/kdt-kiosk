@@ -3,11 +3,16 @@
 ## 프로젝트 개요
 이 프로젝트는 키오스크 사용이 어려운 정보 약자들을 위해 사용자 친화적이고 접근성이 높은 화면 구성을 목표로 합니다. GPT-4와 음성 인식 기술을 키오스크에 접목하여 누구나 쉽게 사용할 수 있도록 설계되었습니다.
 
+## 2024 공개SW대회 출품작
+2024 공개SW대회 출품, 우수작 선정 및 정보집 기재
+
+
 ## 주요 기능
 - **음성 인식 및 상호작용**: Google Cloud Speech API와 GPT-4를 활용하여 음성으로 메뉴를 탐색하고 주문할 수 있습니다.
 - **결제 모듈**: 이니시스 결제 모듈을 연동하여 안전하고 편리한 결제 기능을 제공합니다.
 - **관리자 페이지**: 상품 추가/삭제, 카테고리 관리, 주문 확인 및 환불 처리 등의 기능을 관리할 수 있습니다.
 - **접근성 개선**: 고대비 모드와 같은 기능을 통해 저시력자 등 정보 접근에 어려움을 겪는 사용자의 편의를 돕습니다.
+- **안면 인식**: 안면 인식 기능 추가
 
 ## 기술 스택
 - **백엔드**: Spring Boot
@@ -34,10 +39,6 @@
 ## CI/CD 구조도
 <img src="src/main/resources/asset/img.png">
 
-## 설치 및 실행 방법
-
-https://white-faculty-427513-f2.de.r.appspot.com/
-에서 배포중
 
 ## 프로젝트 계획 관리(JIRA timeline)
 
@@ -47,4 +48,4 @@ https://white-faculty-427513-f2.de.r.appspot.com/
 
 ## show details
 
-https://docs.google.com/presentation/d/1fMRS4e7fqFJVvyF9EAUNxxSPNUnK2aXU/pub?start=false&loop=false&delayms=3000
+https://drive.google.com/file/d/1u8XO_gDM3H7eKhc2y-AIK_gb_G11NTrf/view?usp=sharing
